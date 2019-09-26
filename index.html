@@ -6,12 +6,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>charapool</title>
   <script src="//cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <script src="//unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
 
   <div id="app">
-    {{ message }}
+    <ul>
+      <li v-for="(item, player) in pools">
+        {{ player }}
+        <ul>
+          <li v-for="hero in item">
+            {{ hero }}
+          </li>
+        </ul>
+      </li>
+    </ul>
   </div>
 
   <script src="app.js"></script>
