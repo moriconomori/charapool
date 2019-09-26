@@ -4,7 +4,15 @@ require_once('../config/database.php');
 
 $pdo = getPdo();
 
-$stmt = $pdo->prepare('SELECT player, hero FROM charpool');
+$playerName = $_GET['player'];
+
+if ($playerName) {
+    $stmt = $pdo->prepare('SELECT player, hero FROM charpool WHERE player = :player');
+    $stmt->bindValue('player', $playerName);
+} else {
+    $stmt = $pdo->prepare('SELECT player, hero FROM charpool');
+}
+
 $stmt->execute();
 
 foreach ($stmt as $row) {
