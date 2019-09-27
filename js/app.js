@@ -3,18 +3,22 @@ var app = new Vue({
   data: {
     pools: [],
     players: [],
-    selectedPlayerName: 'selected',
+    selectedPlayerName: '',
     selectedPlayerPool: null,
     showSelectedPlayer: false
   },
   methods: {
     show: async function() {
-      this.selectedPlayerPool = await this.getPoolByPlayer(this.selectedPlayerName);
-      this.showSelectedPlayer = true;
+      if (this.selectedPlayerName) {
+        this.selectedPlayerPool = await this.getPoolByPlayer(this.selectedPlayerName);
+        this.showSelectedPlayer = true;
+      }
     },
     addList: async function() {
-      var selectedPlayerPool = await this.getPoolByPlayer(this.selectedPlayerName);
-      this.pools.push(selectedPlayerPool);
+      if (this.selectedPlayerName) {
+        var selectedPlayerPool = await this.getPoolByPlayer(this.selectedPlayerName);
+        this.pools.push(selectedPlayerPool);
+      }
     },
     hide: function() {
       this.showSelectedPlayer = false;
@@ -30,7 +34,8 @@ var app = new Vue({
           console.log('Error!');
         });
       return pool;
-    }
+    },
+    register: function() {},
   },
   created: async function() {
     var players = [];

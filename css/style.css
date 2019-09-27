@@ -1,0 +1,90 @@
+html,
+body {
+  min-width: 100%;
+  min-height: 100%;
+  background-color: #1e1e1e;
+}
+
+#app {
+  padding: 2.5vw;
+}
+
+.select-player .select,
+.select-player select {
+  width: 100%;
+}
+
+.select-button {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 16px;
+}
+
+.select-button .button {
+  width: 50%;
+}
+
+.select-button .button+.button {
+  margin-left: 8px;
+}
+
+.player-pool {
+  margin-top: 8px;
+}
+
+.pool-list {
+  margin-top: 8px;
+}
+
+.menu {
+  margin: 4vh 0;
+  text-align: center;
+}
+
+.menu a {
+  width: 100%;
+}
+
+.register-form {
+  line-height: 1.2;
+  font-size: 1.2rem;
+  color: whitesmoke;
+}
+
+.register-form label {
+  padding: 4px 16px 4px 0;
+}
+
+.register-form input[type="text"],
+.register-form input[type="checkbox"] {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
+.register-form input[type="text"] {
+  margin-top: 8px;
+  font-size: 1.2rem;
+}
+
+.register-form input[type="checkbox"] {
+  margin-right: 2px;
+}
+
+.register-form input[type="submit"] {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.checkbox:hover,
+.radio:hover {
+  color: whitesmoke;
+}
+
+.hero-checkbox {
+  margin: 8px 0;
+  display: flex;
+  flex-wrap: wrap;
+}

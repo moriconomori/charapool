@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>charapool</title>
+  <title>Charpool</title>
   <script src="//cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
   <script src="//unpkg.com/axios/dist/axios.min.js"></script>
   <script src="./js/gtag.js"></script>
@@ -14,42 +14,51 @@
 
 <body>
   <div id="app">
+    <div class="container">
 
-    <select v-model="selectedPlayerName">
-        <option disabled value="selected">プレイヤーを選択</option>
-        <option v-for="player in players">{{ player }}</option>
-    </select>
+      <div class="select-player">
+        <div class="select">
+          <select v-model="selectedPlayerName">
+            <option disabled value="">プレイヤーを選択</option>
+            <option v-for="player in players">{{ player }}</option>
+          </select>
+        </div>
+        <div class="select-button">
+          <button class="button is-info show" @click="show">プールを表示</button>
+          <button class="button is-primary add-list" @click="addList">一覧に追加</button>
+        </div>
+      </div>
 
-    <button @click="show">プールを表示</button><button @click="addList">一覧に追加</button>
+      <article class="message is-info player-pool" v-if="showSelectedPlayer">
+        <div class="message-header">
+          {{ selectedPlayerPool.player }}
+          <button class="delete" @click="hide"></button>
+        </div>
+        <div class="message-body">
+          <div class="tags are-medium">
+            <span class="tag is-medium" v-for="hero in selectedPlayerPool.heros">{{ hero }}</span>
+          </div>
+        </div>
+      </article>
 
-    <div v-if="showSelectedPlayer">
-      <ul>
-        <li>
-          {{ selectedPlayerPool.player }}<button @click="hide">非表示</button>
-          <ul>
-            <li v-for="hero in selectedPlayerPool.heros">
-              {{ hero }}
-            </li>
-          </ul>
-        </li>
-      </ul>
+      <div class="pool-list" v-if="pools.length">
+        <article class="message is-primary" v-for="(pool, player) in pools">
+          <div class="message-header">
+            {{ pool.player }}
+          </div>
+          <div class="message-body">
+            <div class="tags are-medium">
+              <span class="tag is-medium" v-for="hero in pool.heros">{{ hero }}</span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="menu">
+        <a href="register.html" class="button is-link">新規登録</a>
+      </div>
+
     </div>
-
-    <div id="list">
-      <ul>
-        <li v-for="(pool, player) in pools">
-          {{ pool.player }}
-          <ul>
-            <li v-for="hero in pool.heros">
-              {{ hero }}
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-
-    <a href="register.html">新規登録</a>
-
   </div>
   <script src="./js/app.js"></script>
 </body>
