@@ -15,103 +15,21 @@
 <body>
   <div id="app">
 
-    <form action="./api/register.php" method="post" class="register-form">
-      <input type="text" name="playerName" placeholder="プレイヤー名を入力">
+    <div class="register-form">
+      <form action="./api/register.php" method="post">
+        <input type="text" name="playerName" placeholder="プレイヤー名を入力">
 
-      <div class="hero-checkbox">
-        <label for="マイヤ" class="checkbox"><input type="checkbox" name="hero[]" value="マイヤ" id="マイヤ">マイヤ</label>
-        <label for="バルモンド" class="checkbox"><input type="checkbox" name="hero[]" value="バルモンド" id="バルモンド">バルモンド</label>
-        <label for="セイバー" class="checkbox"><input type="checkbox" name="hero[]" value="セイバー" id="セイバー">セイバー</label>
-        <label for="アリス" class="checkbox"><input type="checkbox" name="hero[]" value="アリス" id="アリス">アリス</label>
-        <label for="ナナ" class="checkbox"><input type="checkbox" name="hero[]" value="ナナ" id="ナナ">ナナ</label>
-        <label for="ティグラル" class="checkbox"><input type="checkbox" name="hero[]" value="ティグラル" id="ティグラル">ティグラル</label>
-        <label for="アルカード" class="checkbox"><input type="checkbox" name="hero[]" value="アルカード" id="アルカード">アルカード</label>
-        <label for="カリナ" class="checkbox"><input type="checkbox" name="hero[]" value="カリナ" id="カリナ">カリナ</label>
-        <label for="ガイ" class="checkbox"><input type="checkbox" name="hero[]" value="ガイ" id="ガイ">ガイ</label>
-        <label for="フランコ" class="checkbox"><input type="checkbox" name="hero[]" value="フランコ" id="フランコ">フランコ</label>
-        <label for="ベイン" class="checkbox"><input type="checkbox" name="hero[]" value="ベイン" id="ベイン">ベイン</label>
-        <label for="ブルーノ" class="checkbox"><input type="checkbox" name="hero[]" value="ブルーノ" id="ブルーノ">ブルーノ</label>
-        <label for="クリント" class="checkbox"><input type="checkbox" name="hero[]" value="クリント" id="クリント">クリント</label>
-        <label for="ラファエル" class="checkbox"><input type="checkbox" name="hero[]" value="ラファエル" id="ラファエル">ラファエル</label>
-        <label for="エウドラ" class="checkbox"><input type="checkbox" name="hero[]" value="エウドラ" id="エウドラ">エウドラ</label>
-        <label for="子龍" class="checkbox"><input type="checkbox" name="hero[]" value="子龍" id="子龍">子龍</label>
-        <label for="ファニー" class="checkbox"><input type="checkbox" name="hero[]" value="ファニー" id="ファニー">ファニー</label>
-        <label for="ライラ" class="checkbox"><input type="checkbox" name="hero[]" value="ライラ" id="ライラ">ライラ</label>
-        <label for="ミノタウロス" class="checkbox"><input type="checkbox" name="hero[]" value="ミノタウロス" id="ミノタウロス">ミノタウロス</label>
-        <label for="ロイン" class="checkbox"><input type="checkbox" name="hero[]" value="ロイン" id="ロイン">ロイン</label>
-        <label for="隼" class="checkbox"><input type="checkbox" name="hero[]" value="隼" id="隼">隼</label>
-        <label for="フレイヤ" class="checkbox"><input type="checkbox" name="hero[]" value="フレイヤ" id="フレイヤ">フレイヤ</label>
-        <label for="グールド" class="checkbox"><input type="checkbox" name="hero[]" value="グールド" id="グールド">グールド</label>
-        <label for="ナタリア" class="checkbox"><input type="checkbox" name="hero[]" value="ナタリア" id="ナタリア">ナタリア</label>
-        <label for="カグラ" class="checkbox"><input type="checkbox" name="hero[]" value="カグラ" id="カグラ">カグラ</label>
-        <label for="シュウ" class="checkbox"><input type="checkbox" name="hero[]" value="シュウ" id="シュウ">シュウ</label>
-        <label for="悟空" class="checkbox"><input type="checkbox" name="hero[]" value="悟空" id="悟空">悟空</label>
-        <label for="アルファ" class="checkbox"><input type="checkbox" name="hero[]" value="アルファ" id="アルファ">アルファ</label>
-        <label for="ルビー" class="checkbox"><input type="checkbox" name="hero[]" value="ルビー" id="ルビー">ルビー</label>
-        <label for="イスンシン" class="checkbox"><input type="checkbox" name="hero[]" value="イスンシン" id="イスンシン">イスンシン</label>
-        <label for="モスコブ" class="checkbox"><input type="checkbox" name="hero[]" value="モスコブ" id="モスコブ">モスコブ</label>
-        <label for="ジェイソン" class="checkbox"><input type="checkbox" name="hero[]" value="ジェイソン" id="ジェイソン">ジェイソン</label>
-        <label for="サイクロプス" class="checkbox"><input type="checkbox" name="hero[]" value="サイクロプス" id="サイクロプス">サイクロプス</label>
-        <label for="エスタス" class="checkbox"><input type="checkbox" name="hero[]" value="エスタス" id="エスタス">エスタス</label>
-        <label for="ヒルダ" class="checkbox"><input type="checkbox" name="hero[]" value="ヒルダ" id="ヒルダ">ヒルダ</label>
-        <label for="オーロラ" class="checkbox"><input type="checkbox" name="hero[]" value="オーロラ" id="オーロラ">オーロラ</label>
-        <label for="ラプラプ" class="checkbox"><input type="checkbox" name="hero[]" value="ラプラプ" id="ラプラプ">ラプラプ</label>
-        <label for="サナ" class="checkbox"><input type="checkbox" name="hero[]" value="サナ" id="サナ">サナ</label>
-        <label for="ロジャー" class="checkbox"><input type="checkbox" name="hero[]" value="ロジャー" id="ロジャー">ロジャー</label>
-        <label for="キャリー" class="checkbox"><input type="checkbox" name="hero[]" value="キャリー" id="キャリー">キャリー</label>
-        <label for="ガトートカチャ" class="checkbox"><input type="checkbox" name="hero[]" value="ガトートカチャ" id="ガトートカチャ">ガトートカチャ</label>
-        <label for="ハーリー" class="checkbox"><input type="checkbox" name="hero[]" value="ハーリー" id="ハーリー">ハーリー</label>
-        <label for="エレシル" class="checkbox"><input type="checkbox" name="hero[]" value="エレシル" id="エレシル">エレシル</label>
-        <label for="ガレック" class="checkbox"><input type="checkbox" name="hero[]" value="ガレック" id="ガレック">ガレック</label>
-        <label for="アルゴス" class="checkbox"><input type="checkbox" name="hero[]" value="アルゴス" id="アルゴス">アルゴス</label>
-        <label for="オデット" class="checkbox"><input type="checkbox" name="hero[]" value="オデット" id="オデット">オデット</label>
-        <label for="ランスロット" class="checkbox"><input type="checkbox" name="hero[]" value="ランスロット" id="ランスロット">ランスロット</label>
-        <label for="ディガー" class="checkbox"><input type="checkbox" name="hero[]" value="ディガー" id="ディガー">ディガー</label>
-        <label for="ヘラクレス" class="checkbox"><input type="checkbox" name="hero[]" value="ヘラクレス" id="ヘラクレス">ヘラクレス</label>
-        <label for="ザスク" class="checkbox"><input type="checkbox" name="hero[]" value="ザスク" id="ザスク">ザスク</label>
-        <label for="ハカート" class="checkbox"><input type="checkbox" name="hero[]" value="ハカート" id="ハカート">ハカート</label>
-        <label for="ファーサ" class="checkbox"><input type="checkbox" name="hero[]" value="ファーサ" id="ファーサ">ファーサ</label>
-        <label for="ラズリー" class="checkbox"><input type="checkbox" name="hero[]" value="ラズリー" id="ラズリー">ラズリー</label>
-        <label for="メタルヘッド" class="checkbox"><input type="checkbox" name="hero[]" value="メタルヘッド" id="メタルヘッド">メタルヘッド</label>
-        <label for="アンジェラ" class="checkbox"><input type="checkbox" name="hero[]" value="アンジェラ" id="アンジェラ">アンジェラ</label>
-        <label for="ゴセン" class="checkbox"><input type="checkbox" name="hero[]" value="ゴセン" id="ゴセン">ゴセン</label>
-        <label for="ヴェルス" class="checkbox"><input type="checkbox" name="hero[]" value="ヴェルス" id="ヴェルス">ヴェルス</label>
-        <label for="マーティス" class="checkbox"><input type="checkbox" name="hero[]" value="マーティス" id="マーティス">マーティス</label>
-        <label for="ウラノス" class="checkbox"><input type="checkbox" name="hero[]" value="ウラノス" id="ウラノス">ウラノス</label>
-        <label for="ハナビ" class="checkbox"><input type="checkbox" name="hero[]" value="ハナビ" id="ハナビ">ハナビ</label>
-        <label for="嫦娥" class="checkbox"><input type="checkbox" name="hero[]" value="嫦娥" id="嫦娥">嫦娥</label>
-        <label for="カチャ" class="checkbox"><input type="checkbox" name="hero[]" value="カチャ" id="カチャ">カチャ</label>
-        <label for="セリナ" class="checkbox"><input type="checkbox" name="hero[]" value="セリナ" id="セリナ">セリナ</label>
-        <label for="アウラド" class="checkbox"><input type="checkbox" name="hero[]" value="アウラド" id="アウラド">アウラド</label>
-        <label for="クラウド" class="checkbox"><input type="checkbox" name="hero[]" value="クラウド" id="クラウド">クラウド</label>
-        <label for="ヴェル" class="checkbox"><input type="checkbox" name="hero[]" value="ヴェル" id="ヴェル">ヴェル</label>
-        <label for="ラインロック" class="checkbox"><input type="checkbox" name="hero[]" value="ラインロック" id="ラインロック">ラインロック</label>
-        <label for="星夢" class="checkbox"><input type="checkbox" name="hero[]" value="星夢" id="星夢">星夢</label>
-        <label for="半蔵" class="checkbox"><input type="checkbox" name="hero[]" value="半蔵" id="半蔵">半蔵</label>
-        <label for="カーディアン" class="checkbox"><input type="checkbox" name="hero[]" value="カーディアン" id="カーディアン">カーディアン        </label>
-        <label for="ジミー" class="checkbox"><input type="checkbox" name="hero[]" value="ジミー" id="ジミー">ジミー</label>
-        <label for="デームス" class="checkbox"><input type="checkbox" name="hero[]" value="デームス" id="デームス">デームス</label>
-        <label for="ハリス" class="checkbox"><input type="checkbox" name="hero[]" value="ハリス" id="ハリス">ハリス</label>
-        <label for="マイシータール" class="checkbox"><input type="checkbox" name="hero[]" value="マイシータール" id="マイシータール">マイシータール</label>
-        <label for="カティタ" class="checkbox"><input type="checkbox" name="hero[]" value="カティタ" id="カティタ">カティタ</label>
-        <label for="マファセス" class="checkbox"><input type="checkbox" name="hero[]" value="マファセス" id="マファセス">マファセス</label>
-        <label for="バターン" class="checkbox"><input type="checkbox" name="hero[]" value="バターン" id="バターン">バターン</label>
-        <label for="クッフラー" class="checkbox"><input type="checkbox" name="hero[]" value="クッフラー" id="クッフラー">クッフラー</label>
-        <label for="グレンジャー" class="checkbox"><input type="checkbox" name="hero[]" value="グレンジャー" id="グレンジャー">グレンジャー</label>
-        <label for="グィネヴィア" class="checkbox"><input type="checkbox" name="hero[]" value="グィネヴィア" id="グィネヴィア">グィネヴィア</label>
-        <label for="エスメラルダ" class="checkbox"><input type="checkbox" name="hero[]" value="エスメラルダ" id="エスメラルダ">エスメラルダ</label>
-        <label for="ディスラー" class="checkbox"><input type="checkbox" name="hero[]" value="ディスラー" id="ディスラー">ディスラー</label>
-        <label for="ディアス" class="checkbox"><input type="checkbox" name="hero[]" value="ディアス" id="ディアス">ディアス</label>
-        <label for="リリア" class="checkbox"><input type="checkbox" name="hero[]" value="リリア" id="リリア">リリア</label>
-        <label for="エックス" class="checkbox"><input type="checkbox" name="hero[]" value="エックス" id="エックス">エックス</label>
-        <label for="マーシャ" class="checkbox"><input type="checkbox" name="hero[]" value="マーシャ" id="マーシャ">マーシャ</label>
-      </div>
-      <input type="submit" value="登録する" class="button is-success" @click="register">
+        <div class="hero-checkbox">
+          <label v-for="(nameen, nameja) in herosName" :key="nameja" :for="nameen" class="checkbox"><input type="checkbox" name="hero[]" :value="nameja" :id="nameen">{{ nameja }}</label>
+        </div>
+
+        <input type="submit" value="登録する" class="button is-success" @click="register">
+      </form>
 
       <div class="menu">
         <a href="./" class="button is-link">戻る</a>
       </div>
-    </form>
+    </div>
 
   </div>
   <script src="./js/app.js"></script>
