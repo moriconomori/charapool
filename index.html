@@ -12,16 +12,39 @@
 <body>
 
   <div id="app">
-    <ul>
-      <li v-for="(item, player) in pools">
-        {{ player }}
-        <ul>
-          <li v-for="hero in item">
-            {{ hero }}
-          </li>
-        </ul>
-      </li>
-    </ul>
+
+    <select v-model="selectedPlayerName">
+        <option disabled value="selected">プレイヤーを選択</option>
+        <option v-for="player in players">{{ player }}</option>
+    </select>
+
+    <button @click="show">プールを表示</button><button @click="addList">一覧に追加</button>
+
+    <div v-if="showSelectedPlayer">
+      <ul>
+        <li>
+          {{ selectedPlayerPool.player }}<button @click="hide">非表示</button>
+          <ul>
+            <li v-for="hero in selectedPlayerPool.heros">
+              {{ hero }}
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div id="list">
+      <ul>
+        <li v-for="(pool, player) in pools">
+          {{ pool.player }}
+          <ul>
+            <li v-for="hero in pool.heros">
+              {{ hero }}
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </div>
 
   <a href="register.html">新規登録</a>

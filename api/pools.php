@@ -15,8 +15,16 @@ if ($playerName) {
 
 $stmt->execute();
 
-foreach ($stmt as $row) {
-    $pools[$row['player']][] = $row['hero'];
+$rows = $stmt->fetchAll();
+
+foreach ($rows as $row) {
+    $data[$row['player']][] = $row['hero'];
+}
+
+foreach ($data as $player => $heros) {
+    $pool['player'] = $player;
+    $pool['heros'] = $heros;
+    $pools[] = $pool;
 }
 
 $json = json_encode($pools, JSON_UNESCAPED_UNICODE);
