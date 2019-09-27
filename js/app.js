@@ -12,12 +12,14 @@ var app = new Vue({
       if (this.selectedPlayerName) {
         this.selectedPlayerPool = await this.getPoolByPlayer(this.selectedPlayerName);
         this.showSelectedPlayer = true;
+        gtag('event', 'show', { 'event_category': 'pool', 'event_label': this.selectedPlayerName });
       }
     },
     addList: async function() {
       if (this.selectedPlayerName) {
         var selectedPlayerPool = await this.getPoolByPlayer(this.selectedPlayerName);
         this.pools.push(selectedPlayerPool);
+        gtag('event', 'add_list', { 'event_category': 'pool', 'event_label': this.selectedPlayerName });
       }
     },
     hide: function() {
@@ -35,7 +37,9 @@ var app = new Vue({
         });
       return pool;
     },
-    register: function() {},
+    register: function() {
+      gtag('event', 'register', { 'event_category': 'register' });
+    },
   },
   created: async function() {
     var players = [];
