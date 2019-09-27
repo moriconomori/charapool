@@ -35,8 +35,8 @@
           <button class="delete" @click="hide"></button>
         </div>
         <div class="message-body">
-          <div class="tags are-medium">
-            <span class="tag is-medium" v-for="hero in selectedPlayerPool.heros">{{ hero }}</span>
+          <div class="hero-thumbnail-wrapper">
+            <img v-for="hero in selectedPlayerPool.heros" v-bind:src="'img/' + herosName[hero] + '.jpg'" v-bind:alt="herosName[hero]" class="hero-thumbnail">
           </div>
         </div>
       </article>
@@ -47,8 +47,8 @@
             {{ pool.player }}
           </div>
           <div class="message-body">
-            <div class="tags are-medium">
-              <span class="tag is-medium" v-for="hero in pool.heros">{{ hero }}</span>
+            <div class="hero-thumbnail-wrapper">
+              <img v-for="hero in pool.heros" v-bind:src="'img/' + herosName[hero] + '.jpg'" v-bind:alt="herosName[hero]" class="hero-thumbnail">
             </div>
           </div>
         </article>

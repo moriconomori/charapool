@@ -5,7 +5,8 @@ var app = new Vue({
     players: [],
     selectedPlayerName: '',
     selectedPlayerPool: null,
-    showSelectedPlayer: false
+    showSelectedPlayer: false,
+    herosName: [],
   },
   methods: {
     show: async function() {
@@ -51,5 +52,15 @@ var app = new Vue({
         console.log('Error!');
       });
     this.players = players;
+
+    var herosName = [];
+    await axios.get('./data/heros_name.json')
+      .then(function(res) {
+        herosName = res.data;
+      })
+      .catch(function(err) {
+        console.log('Error!');
+      });
+    this.herosName = herosName;
   }
 })
