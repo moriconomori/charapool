@@ -20,5 +20,5 @@ for ($i = 0; $i < count($heros); $i++) {
 $stmt = $pdo->prepare($sql);
 $stmt->execute($values);
 
-header('Location: https://mobare.dip.jp/');
+header('Location: ../');
 exit;
