@@ -20,7 +20,7 @@
         <div class="select">
           <select v-model="selectedPlayerName">
             <option disabled value="">プレイヤーを選択</option>
-            <option v-for="player in players">{{ player }}</option>
+            <option v-for="player in players" :key="player">{{ player }}</option>
           </select>
         </div>
         <div class="select-button">
@@ -36,19 +36,19 @@
         </div>
         <div class="message-body">
           <div class="hero-thumbnail-wrapper">
-            <img v-for="hero in selectedPlayerPool.heros" v-bind:src="'img/' + herosName[hero] + '.jpg'" v-bind:alt="herosName[hero]" class="hero-thumbnail">
+            <img v-for="hero in selectedPlayerPool.heros" :key="hero" v-bind:src="'img/' + herosName[hero] + '.jpg'" v-bind:alt="herosName[hero]" class="hero-thumbnail">
           </div>
         </div>
       </article>
 
       <div class="pool-list" v-if="pools.length">
-        <article class="message is-primary" v-for="(pool, player) in pools">
+        <article class="message is-primary" v-for="(pool, player) in pools" :key="player">
           <div class="message-header">
             {{ pool.player }}
           </div>
           <div class="message-body">
             <div class="hero-thumbnail-wrapper">
-              <img v-for="hero in pool.heros" v-bind:src="'img/' + herosName[hero] + '.jpg'" v-bind:alt="herosName[hero]" class="hero-thumbnail">
+              <img v-for="hero in pool.heros" :key="hero" v-bind:src="'img/' + herosName[hero] + '.jpg'" v-bind:alt="herosName[hero]" class="hero-thumbnail">
             </div>
           </div>
         </article>
