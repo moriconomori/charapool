@@ -41,26 +41,29 @@ var app = new Vue({
     register: function() {
       gtag('event', 'register', { 'event_category': 'register' });
     },
+    init: async function() {
+      var players = [];
+      await axios.get('./api/players.php')
+        .then(function(res) {
+          players = res.data;
+        })
+        .catch(function(err) {
+          console.log('Error!');
+        });
+      this.players = players;
+
+      var herosName = [];
+      await axios.get('./data/heros_name.json')
+        .then(function(res) {
+          herosName = res.data;
+        })
+        .catch(function(err) {
+          console.log('Error!');
+        });
+      this.herosName = herosName;
+    },
   },
   created: async function() {
-    var players = [];
-    await axios.get('./api/players.php')
-      .then(function(res) {
-        players = res.data;
-      })
-      .catch(function(err) {
-        console.log('Error!');
-      });
-    this.players = players;
-
-    var herosName = [];
-    await axios.get('./data/heros_name.json')
-      .then(function(res) {
-        herosName = res.data;
-      })
-      .catch(function(err) {
-        console.log('Error!');
-      });
-    this.herosName = herosName;
+    await this.init();
   }
 })
