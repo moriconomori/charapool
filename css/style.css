@@ -52,7 +52,7 @@ body {
 }
 
 .pool-list {
-  margin-top: 24px;
+  margin: 16px 0 24px;
 }
 
 .pool-list .message-header,
