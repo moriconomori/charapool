@@ -5,22 +5,22 @@ var app = new Vue({
     players: [],
     selectedPlayerName: '',
     selectedPlayerPool: null,
-    showSelectedPlayer: false,
     herosName: [],
   },
   methods: {
-    show: async function() {
-      if (this.selectedPlayerName) {
-        this.selectedPlayerPool = await this.getPoolByPlayer(this.selectedPlayerName);
-        this.showSelectedPlayer = true;
-        gtag('event', 'show', { 'event_category': 'pool', 'event_label': this.selectedPlayerName });
-      }
-    },
     addList: async function() {
       if (this.selectedPlayerName) {
+        gtag('event', 'add_list', { 'event_category': 'pool', 'event_label': this.selectedPlayerName });
+
+        for (let i = 0; i < this.pools.length; i++) {
+          const item = this.pools[i];
+          if (item.player === this.selectedPlayerName) {
+            return;
+          }
+        }
+
         var selectedPlayerPool = await this.getPoolByPlayer(this.selectedPlayerName);
         this.pools.push(selectedPlayerPool);
-        gtag('event', 'add_list', { 'event_category': 'pool', 'event_label': this.selectedPlayerName });
       }
     },
     removeList: function(player) {
@@ -33,9 +33,6 @@ var app = new Vue({
         }
       }
       this.pools.splice(index, 1);
-    },
-    hide: function() {
-      this.showSelectedPlayer = false;
     },
     getPoolByPlayer: async function(player) {
       var pool;

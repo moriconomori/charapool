@@ -25,24 +25,9 @@
           </select>
         </div>
         <div class="select-button">
-          <button class="button is-info show" @click="show">プールを表示</button>
-          <button class="button is-primary add-list" @click="addList">一覧に追加</button>
+          <button class="button is-primary add-list" @click="addList">表示する</button>
         </div>
       </div>
-
-      <transition name="slide">
-        <article class="message is-info player-pool" v-if="showSelectedPlayer">
-          <div class="message-header">
-            <span>{{ selectedPlayerPool.player }}</span>
-            <button class="delete" @click="hide"></button>
-          </div>
-          <div class="message-body">
-            <div class="hero-thumbnail-wrapper">
-              <img v-for="hero in selectedPlayerPool.heros" :key="hero" :src="'img/' + herosName[hero] + '.jpg'" :alt="herosName[hero]" class="hero-thumbnail">
-            </div>
-          </div>
-        </article>
-      </transition>
 
       <div class="pool-list">
         <transition-group name="slide" tag="article">
