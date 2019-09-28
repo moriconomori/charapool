@@ -19,7 +19,7 @@
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-item" href="https://mobare.dip.jp/pool/">
-          <span>Charpool</span>
+          <h1>Charpool</h1>
         </a>
       </div>
     </nav>
@@ -29,7 +29,7 @@
       <div class="select-player">
         <div class="select">
           <select v-model="selectedPlayerName">
-            <option disabled value="">プレイヤーを選択</option>
+            <option disabled value="">パーティーメンバーを選択</option>
             <option v-for="player in players" :key="player">{{ player }}</option>
           </select>
         </div>
@@ -52,6 +52,16 @@
             </div>
           </article>
         </transition-group>
+      </div>
+
+      <div class="content">
+        <h2>What's this</h2>
+        <p>ランクマッチの Pick & Ban でパーティーメンバーのヒーロープール (得意なヒーローや使えるヒーロー) を確認できるツールです。</p>
+        <h2>How to use</h2>
+        <ol type="1">
+          <li>自分が得意なヒーローや使えるヒーローを登録する (苦手なヒーローや使えないヒーローは登録しなくてもよい)</li>
+          <li>パーティメンバーのプールを表示して Pick & Ban の参考にする</li>
+        </ol>
       </div>
 
       <div class="menu">
