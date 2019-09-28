@@ -7,10 +7,10 @@ $pdo = getPdo();
 $playerName = $_GET['player'];
 
 if ($playerName) {
-    $stmt = $pdo->prepare('SELECT player, hero FROM charpool WHERE player = :player');
+    $stmt = $pdo->prepare('SELECT player, hero, specialty FROM charpool WHERE player = :player');
     $stmt->bindValue('player', $playerName);
 } else {
-    $stmt = $pdo->prepare('SELECT player, hero FROM charpool');
+    $stmt = $pdo->prepare('SELECT player, hero, specialty FROM charpool');
 }
 
 $stmt->execute();
@@ -18,7 +18,9 @@ $stmt->execute();
 $rows = $stmt->fetchAll();
 
 foreach ($rows as $row) {
-    $data[$row['player']][] = $row['hero'];
+    $hero['name'] = $row['hero'];
+    $hero['specialty'] = $row['specialty'];
+    $data[$row['player']][] = $hero;
 }
 
 foreach ($data as $player => $heros) {
