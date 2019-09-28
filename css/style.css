@@ -38,8 +38,24 @@ body {
   padding: 2px;
 }
 
+@media screen and (min-width: 980px) {
+  .hero-thumbnail {
+    width: 100px;
+    padding: 4px;
+  }
+}
+
 .pool-list {
   margin-top: 24px;
+}
+
+.pool-list .message-header,
+.pool-list .message-body {
+  padding: 6px;
+}
+
+.message:not(:last-child) {
+  margin-bottom: 1.0rem;
 }
 
 .menu {
