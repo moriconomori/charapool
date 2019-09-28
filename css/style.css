@@ -2,11 +2,19 @@ html,
 body {
   min-width: 100%;
   min-height: 100%;
-  background-color: #1e1e1e;
+  background-color: #36393f;
 }
 
-#app {
-  padding: 2.5vw;
+.navbar {
+  background-color: #2f3136;
+}
+
+.navbar-item {
+  color: white;
+}
+
+.container {
+  padding: 2%;
 }
 
 .select-player {
