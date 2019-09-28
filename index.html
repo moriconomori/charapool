@@ -49,6 +49,7 @@
           <article class="message is-primary" v-for="(pool, player) in pools" :key="pool.player">
             <div class="message-header">
               <span>{{ pool.player }}</span>
+              <button class="delete" @click="remove(pool.player)"></button>
             </div>
             <div class="message-body">
               <div class="hero-thumbnail-wrapper">

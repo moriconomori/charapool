@@ -23,6 +23,17 @@ var app = new Vue({
         gtag('event', 'add_list', { 'event_category': 'pool', 'event_label': this.selectedPlayerName });
       }
     },
+    removeList: function(player) {
+      var index = 0;
+      for (let i = 0; i < this.pools.length; i++) {
+        const item = this.pools[i];
+        if (item.player === player) {
+          index = i;
+          break;
+        }
+      }
+      this.pools.splice(index, 1);
+    },
     hide: function() {
       this.showSelectedPlayer = false;
     },
@@ -62,8 +73,11 @@ var app = new Vue({
         });
       this.herosName = herosName;
     },
+    remove: function(player) {
+      this.removeList(player);
+    },
   },
   created: async function() {
     await this.init();
-  }
+  },
 })
