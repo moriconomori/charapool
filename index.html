@@ -34,11 +34,11 @@
           <article class="message is-primary" v-for="(pool, player) in pools" :key="pool.player">
             <div class="message-header">
               <span>{{ pool.player }}</span>
-              <button class="delete" @click="remove(pool.player)"></button>
+              <button class="delete is-medium" @click="remove(pool.player)"></button>
             </div>
             <div class="message-body">
               <div class="hero-thumbnail-wrapper">
-                <img v-for="hero in pool.heros" :key="hero" :src="'img/' + herosName[hero] + '.jpg'" :alt="herosName[hero]" class="hero-thumbnail">
+                <img v-for="hero in pool.heros" :key="hero" :src="'img/' + herosName[hero] + '.jpg'" :title="hero" :alt="herosName[hero]" class="hero-thumbnail">
               </div>
             </div>
           </article>
@@ -48,6 +48,10 @@
       <div class="menu">
         <a href="register.html" class="button is-link">ヒーロープールを登録する</a>
       </div>
+
+      <footer class="footer">
+        <p>&copy; 2019 Morico</p>
+      </footer>
 
     </div>
   </div>
