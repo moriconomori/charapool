@@ -10,18 +10,23 @@ body {
 }
 
 .navbar-item {
-  color: white;
+  color: whitesmoke;
+}
+
+.navbar-brand {
+  justify-content: space-between;
 }
 
 .container {
-  padding: 2%;
-  color: white;
+  padding: 0 2%;
+  color: whitesmoke;
 }
 
 .select-player {
   display: flex;
   justify-content: space-between;
   height: 48px;
+  margin: 16px 0;
 }
 
 .select-player .select,
@@ -40,11 +45,14 @@ body {
 }
 
 .hero-thumbnail-frame {
+  margin: 3px;
+  width: calc(100%/5 - 6px);
+}
+
+.hero-thumbnail-frame-good {
   border-style: solid;
   border-width: 4px;
-  border-color: #bdc3C9;
-  margin: 4px;
-  width: calc(100%/5 - 8px);
+  border-color: #ffdb4a;
 }
 
 .hero-thumbnail {
@@ -54,7 +62,7 @@ body {
 
 @media screen and (min-width: 980px) {
   .hero-thumbnail-frame {
-    width: calc(100%/10 - 8px);
+    width: calc(100%/10 - 4px);
   }
 }
 
@@ -81,9 +89,13 @@ body {
 }
 
 .register-form {
-  line-height: 1.2;
-  font-size: 1.2rem;
+  margin: 16px auto;
+  padding: 0 8px;
   color: whitesmoke;
+}
+
+.register-form form {
+  margin: 16px auto;
 }
 
 .register-form label {
@@ -99,8 +111,14 @@ body {
 }
 
 .register-form input[type="text"] {
-  margin-top: 8px;
+  width: 100%;
+  height: 48px;
+  padding: 8px;
   font-size: 1.2rem;
+  background-color: #fff;
+  border-color: #dbdbdb;
+  border-radius: 4px;
+  color: #363636;
 }
 
 .register-form input[type="checkbox"] {
@@ -109,7 +127,7 @@ body {
 
 .register-form input[type="submit"] {
   display: block;
-  margin: 0 auto;
+  margin: 32px auto;
   width: 100%;
 }
 
@@ -119,9 +137,40 @@ body {
 }
 
 .hero-checkbox {
-  margin: 8px 0;
+  margin: 16px 0;
+}
+
+.hero-checkbox li {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.hero-checkbox li:not(:last-child) {
+  border-bottom: solid 2px #bdc3C9;
+}
+
+.hero-checkbox input[type="checkbox"] {
+  width: 1.4em;
+  height: 1.4em;
+}
+
+.hero-checkbox img {
+  vertical-align: middle;
+  width: 16vw;
+  max-width: 100px;
+  margin: 0 8px;
+}
+
+.hero-checkbox-specialty {
+  width: 30%;
+}
+
+.hero-checkbox-specialty label {
+  display: block;
+  position: relative;
+  padding-left: 1.5em;
 }
 
 .slide-enter,
@@ -141,7 +190,7 @@ body {
 
 .footer {
   background-color: transparent;
-  color: white;
+  color: whitesmoke;
   padding: 0;
   margin: 16px 0;
   text-align: center;
@@ -152,5 +201,10 @@ body {
 }
 
 .content h2 {
-  color: white;
+  color: whitesmoke;
+}
+
+.title,
+.subtitle {
+  color: whitesmoke;
 }

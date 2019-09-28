@@ -15,14 +15,38 @@
 
 <body>
   <div id="app">
+
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="https://mobare.dip.jp/pool/">
+          <h1>Charpool</h1>
+        </a>
+      </div>
+    </nav>
+
     <div class="container">
 
       <div class="register-form">
+        <h2 class="title is-5">ヒーロープールの登録</h2>
+        <ul>
+          <li>得意なヒーロー、使えるヒーローにチェックを入れて下さい。</li>
+          <li>「得意」にチェックを入れると一覧表示でそのヒーローが目立って表示されます。</li>
+        </ul>
+
         <form action="./api/register.php" method="post">
-          <input type="text" name="playerName" placeholder="プレイヤー名を入力">
+          <input type="text" name="playerName" placeholder="プレイヤー名を入力" required>
 
           <div class="hero-checkbox">
-            <label v-for="(nameen, nameja) in herosName" :key="nameja" :for="nameen" class="checkbox"><input type="checkbox" name="hero[]" :value="nameja" :id="nameen">{{ nameja }}</label>
+            <ul>
+              <li v-for="(nameen, nameja, i) in herosName" :key="nameja">
+                <div class="hero-checkbox-hero">
+                  <label class="checkbox"><input type="hidden" :name="'heros[' + i + '][name]'" :value="nameja"><input type="hidden" :name="'heros[' + i + '][hasHero]'" value="false"><input type="checkbox" :name="'heros[' + i + '][hasHero]'" value="true"><img :src="'img/' + nameen + '.jpg'" :title="nameja" :alt="nameja"><span>{{ nameja }}</span></label>
+                </div>
+                <div class="hero-checkbox-specialty">
+                  <label class="checkbox"><input type="hidden" :name="'heros[' + i + '][specialty]'" value="normal"><input type="checkbox" :name="'heros[' + i + '][specialty]'" value="good"><span>得意</span></label>
+                </div>
+              </li>
+            </ul>
           </div>
 
           <input type="submit" value="登録する" class="button is-success" @click="register">
@@ -32,6 +56,11 @@
           <a href="./" class="button is-link">戻る</a>
         </div>
       </div>
+
+      <footer class="footer">
+        <p>Ver. 0.9.0</p>
+        <p>&copy; 2019 Morico</p>
+      </footer>
 
     </div>
   </div>

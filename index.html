@@ -21,10 +21,31 @@
         <a class="navbar-item" href="https://mobare.dip.jp/pool/">
           <h1>Charpool</h1>
         </a>
+        <a href="register.html" class="navbar-item">
+          <span>登録</span>
+        </a>
       </div>
     </nav>
 
     <div class="container">
+
+      <div class="pool-list">
+        <transition-group name="slide" tag="article">
+          <article class="message is-primary is-small" v-for="(pool, player) in pools" :key="pool.player">
+            <div class="message-header">
+              <span>{{ pool.player }}</span>
+              <button class="delete is-medium" @click="remove(pool.player)"></button>
+            </div>
+            <div class="message-body">
+              <div class="hero-thumbnail-wrapper">
+                <div v-for="hero in pool.heros" class="hero-thumbnail-frame" :class="hero.specialty === 'good' ? 'hero-thumbnail-frame-good' : '' ">
+                  <img :key="hero.name" :src="'img/' + herosName[hero.name] + '.jpg'" :title="hero.name" :alt="herosName[hero.name]" class="hero-thumbnail">
+                </div>
+              </div>
+            </div>
+          </article>
+        </transition-group>
+      </div>
 
       <div class="select-player">
         <div class="select">
@@ -38,31 +59,16 @@
         </div>
       </div>
 
-      <div class="pool-list">
-        <transition-group name="slide" tag="article">
-          <article class="message is-primary" v-for="(pool, player) in pools" :key="pool.player">
-            <div class="message-header">
-              <span>{{ pool.player }}</span>
-              <button class="delete is-medium" @click="remove(pool.player)"></button>
-            </div>
-            <div class="message-body">
-              <div class="hero-thumbnail-wrapper">
-                <div v-for="hero in pool.heros" class="hero-thumbnail-frame">
-                  <img :key="hero.name" :src="'img/' + herosName[hero.name] + '.jpg'" :title="hero.name" :alt="herosName[hero.name]" class="hero-thumbnail">
-                </div>
-              </div>
-            </div>
-          </article>
-        </transition-group>
+      <div class="content is-small">
+        <h2 class="title is-4">What's this</h2>
+        <p class="subtitle is-6">ランクマッチの Pick & Ban でパーティーメンバーのヒーロープール (得意なヒーローや使えるヒーロー) を確認するためのツールです。</p>
       </div>
 
-      <div class="content">
-        <h2>What's this</h2>
-        <p>ランクマッチの Pick & Ban でパーティーメンバーのヒーロープール (得意なヒーローや使えるヒーロー) を確認できるツールです。</p>
-        <h2>How to use</h2>
-        <ol type="1">
-          <li>自分が得意なヒーローや使えるヒーローを登録する (苦手なヒーローや使えないヒーローは登録しなくてもよい)</li>
-          <li>パーティメンバーのプールを表示して Pick & Ban の参考にする</li>
+      <div class="content is-small">
+        <h2 class="title is-4">How to use</h2>
+        <ol type="1" class="subtitle is-6">
+          <li>自分が得意なヒーローや使えるヒーローを登録する (持っていても苦手なヒーローなどは登録しなくてもよい)</li>
+          <li>パーティメンバーのヒーロープールを表示して Pick & Ban で活用する</li>
         </ol>
       </div>
 
@@ -71,6 +77,7 @@
       </div>
 
       <footer class="footer">
+        <p>Ver. 0.9.0</p>
         <p>&copy; 2019 Morico</p>
       </footer>
 
