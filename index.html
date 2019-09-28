@@ -30,29 +30,33 @@
         </div>
       </div>
 
-      <article class="message is-info player-pool" v-if="showSelectedPlayer">
-        <div class="message-header">
-          {{ selectedPlayerPool.player }}
-          <button class="delete" @click="hide"></button>
-        </div>
-        <div class="message-body">
-          <div class="hero-thumbnail-wrapper">
-            <img v-for="hero in selectedPlayerPool.heros" :key="hero" :src="'img/' + herosName[hero] + '.jpg'" :alt="herosName[hero]" class="hero-thumbnail">
-          </div>
-        </div>
-      </article>
-
-      <div class="pool-list" v-if="pools.length">
-        <article class="message is-primary" v-for="(pool, player) in pools" :key="player">
+      <transition name="slide">
+        <article class="message is-info player-pool" v-if="showSelectedPlayer">
           <div class="message-header">
-            {{ pool.player }}
+            <span>{{ selectedPlayerPool.player }}</span>
+            <button class="delete" @click="hide"></button>
           </div>
           <div class="message-body">
             <div class="hero-thumbnail-wrapper">
-              <img v-for="hero in pool.heros" :key="hero" :src="'img/' + herosName[hero] + '.jpg'" :alt="herosName[hero]" class="hero-thumbnail">
+              <img v-for="hero in selectedPlayerPool.heros" :key="hero" :src="'img/' + herosName[hero] + '.jpg'" :alt="herosName[hero]" class="hero-thumbnail">
             </div>
           </div>
         </article>
+      </transition>
+
+      <div class="pool-list">
+        <transition-group name="slide" tag="article">
+          <article class="message is-primary" v-for="(pool, player) in pools" :key="pool.player">
+            <div class="message-header">
+              <span>{{ pool.player }}</span>
+            </div>
+            <div class="message-body">
+              <div class="hero-thumbnail-wrapper">
+                <img v-for="hero in pool.heros" :key="hero" :src="'img/' + herosName[hero] + '.jpg'" :alt="herosName[hero]" class="hero-thumbnail">
+              </div>
+            </div>
+          </article>
+        </transition-group>
       </div>
 
       <div class="menu">

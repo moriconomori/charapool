@@ -29,7 +29,7 @@ body {
 }
 
 .player-pool {
-  margin-top: 8px;
+  margin-top: 24px;
 }
 
 .hero-thumbnail-wrapper {
@@ -43,7 +43,7 @@ body {
 }
 
 .pool-list {
-  margin-top: 8px;
+  margin-top: 24px;
 }
 
 .menu {
@@ -97,4 +97,19 @@ body {
   margin: 8px 0;
   display: flex;
   flex-wrap: wrap;
+}
+
+.slide-enter,
+.slide-leave-to {
+  opacity: 0;
+}
+
+.slide-enter-to,
+.slide-leave {
+  opacity: 1;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: opacity 400ms ease-out;
 }
