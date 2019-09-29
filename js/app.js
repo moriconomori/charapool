@@ -20,6 +20,18 @@ var app = new Vue({
         }
 
         var selectedPlayerPool = await this.getPoolByPlayer(this.selectedPlayerName);
+
+        var heros = selectedPlayerPool.heros;
+        var herosSorted = [];
+        heros.forEach(hero => {
+          if (hero.specialty == "good") {
+            herosSorted.unshift(hero);
+          } else {
+            herosSorted.push(hero);
+          }
+        });
+        selectedPlayerPool.heros = herosSorted;
+
         this.pools.push(selectedPlayerPool);
       }
     },
