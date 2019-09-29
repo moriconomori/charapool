@@ -62,7 +62,7 @@ body {
 
 @media screen and (min-width: 980px) {
   .hero-thumbnail-frame {
-    width: calc(100%/10 - 4px);
+    width: calc(100%/10 - 6px);
   }
 }
 
