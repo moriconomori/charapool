@@ -64,6 +64,15 @@ body {
   width: 100%;
 }
 
+@media screen and (orientation: landscape) {
+  .hero-thumbnail-frame {
+    width: calc(100%/10 - 6px);
+  }
+  .hero-thumbnail-frame-good {
+    border-width: 4px;
+  }
+}
+
 @media screen and (min-width: 980px) {
   .hero-thumbnail-frame {
     margin: 6px;
