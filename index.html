@@ -31,8 +31,8 @@
     <div class="container">
 
       <div class="pool-list">
-        <transition-group name="slide" tag="article">
-          <article class="message is-primary is-small" v-for="(pool, player) in pools" :key="pool.player">
+        <transition-group name="slide" tag="div">
+          <article class="message is-primary" v-for="(pool, player) in pools" :key="pool.player">
             <div class="message-header">
               <span>{{ pool.player }}</span>
               <button class="delete is-medium" @click="remove(pool.player)"></button>

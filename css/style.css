@@ -25,7 +25,7 @@ body {
 .select-player {
   display: flex;
   justify-content: space-between;
-  height: 48px;
+  height: 40px;
   margin: 16px 0;
 }
 
@@ -35,8 +35,9 @@ body {
   height: 100%;
 }
 
-.select-button {
+.select-player .button {
   margin-left: 8px;
+  height: 100%;
 }
 
 .hero-thumbnail-wrapper {
@@ -46,6 +47,9 @@ body {
 
 .hero-thumbnail-frame {
   margin: 3px;
+  border-style: solid;
+  border-width: 4px;
+  border-color: #fff;
   width: calc(100%/5 - 6px);
 }
 
@@ -62,7 +66,11 @@ body {
 
 @media screen and (min-width: 980px) {
   .hero-thumbnail-frame {
-    width: calc(100%/10 - 6px);
+    margin: 6px;
+    width: calc(100%/10 - 12px);
+  }
+  .hero-thumbnail-frame-good {
+    border-width: 8px;
   }
 }
 
@@ -70,9 +78,12 @@ body {
   margin: 16px 0 24px;
 }
 
-.pool-list .message-header,
+.pool-list .message-header {
+  padding: 1vw 2vw;
+}
+
 .pool-list .message-body {
-  padding: 6px;
+  padding: 1vw;
 }
 
 .message:not(:last-child) {
@@ -192,12 +203,12 @@ body {
   background-color: transparent;
   color: whitesmoke;
   padding: 0;
-  margin: 16px 0;
+  margin: 24px 0;
   text-align: center;
 }
 
 .button {
-  height: 48px;
+  /* height: 40px; */
 }
 
 .content h2 {
