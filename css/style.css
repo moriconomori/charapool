@@ -77,8 +77,6 @@ body {
   .hero-thumbnail-frame {
     margin: 6px;
     width: calc(100%/10 - 12px);
-  }
-  .hero-thumbnail-frame-good {
     border-width: 8px;
   }
 }
