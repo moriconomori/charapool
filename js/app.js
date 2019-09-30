@@ -48,7 +48,7 @@ var app = new Vue({
     },
     getPoolByPlayer: async function(player) {
       var pool;
-      var uri = './api/pools.php?player=' + player;
+      var uri = 'api/pools/' + player;
       await axios.get(uri)
         .then(function(res) {
           pool = res.data[0];
@@ -63,7 +63,7 @@ var app = new Vue({
     },
     init: async function() {
       var players = [];
-      await axios.get('./api/players.php')
+      await axios.get('api/players')
         .then(function(res) {
           players = res.data;
         })

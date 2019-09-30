@@ -28,13 +28,15 @@
 
       <div class="register-form">
         <h2 class="title is-5">ヒーロープールの登録</h2>
-        <ul>
+        <ul class="content">
           <li>得意なヒーロー、使えるヒーローにチェックを入れて下さい。</li>
           <li>「得意」にチェックを入れると一覧表示でそのヒーローが目立って表示されます。</li>
-          <li>※ 現在、登録後の修正や削除はできませんので、間違えて登録した方は Discord でモリコまで DM かメンションください</li>
         </ul>
+        <p class="content">
+          <span>※ 現在、登録後の修正や削除はできませんので、間違えて登録した方は Discord でモリコまで DM かメンションください</span>
+        </p>
 
-        <form action="./api/register.php" method="post">
+        <form action="./api/register" method="post">
           <input type="text" name="playerName" placeholder="プレイヤー名を入力" required>
 
           <div class="hero-checkbox">
