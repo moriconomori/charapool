@@ -1,7 +1,6 @@
 {
   "name": "Charpool",
   "short_name": "Charpool",
-  "background_color": "#ffffff",
   "icons": [{
     "src": "./icon-192.png",
     "sizes": "192x192",

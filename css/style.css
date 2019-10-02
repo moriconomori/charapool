@@ -186,7 +186,6 @@ body {
 }
 
 .hero-checkbox-specialty label {
-  display: block;
   position: relative;
   padding-left: 1.5em;
 }
@@ -212,10 +211,6 @@ body {
   padding: 0;
   margin: 24px 0;
   text-align: center;
-}
-
-.button {
-  /* height: 40px; */
 }
 
 .content h2 {

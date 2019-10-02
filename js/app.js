@@ -85,8 +85,16 @@ var app = new Vue({
     remove: function(player) {
       this.removeList(player);
     },
+    serviceWorkerRegister: function() {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js').then(function() {
+          console.log('Service Worker Registered');
+        });
+      }
+    }
   },
   created: async function() {
     await this.init();
+    this.serviceWorkerRegister();
   },
 })
