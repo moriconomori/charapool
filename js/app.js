@@ -1,3 +1,16 @@
+Vue.component('footer-component', {
+  template: `
+  <footer class="footer">
+    <p>
+      <span>Ver. 0.9.0</span>
+    </p>
+    <p>
+      <span>&copy; 2019 Morico</span>
+    </p>
+  </footer>
+  `
+})
+
 var app = new Vue({
   el: '#app',
   data: {
