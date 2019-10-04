@@ -11,11 +11,19 @@ Vue.component('footer-component', {
   `
 })
 
+var router = new VueRouter({
+  mode: 'history',
+  routes: [],
+})
+
 var app = new Vue({
   el: '#app',
+  router: router,
   data: {
     pools: [],
+    pool: [],
     players: [],
+    player: '',
     selectedPlayerName: '',
     selectedPlayerPool: null,
     herosName: [],
@@ -34,19 +42,22 @@ var app = new Vue({
 
         var selectedPlayerPool = await this.getPoolByPlayer(this.selectedPlayerName);
 
-        var heros = selectedPlayerPool.heros;
-        var herosSorted = [];
-        heros.forEach(hero => {
-          if (hero.specialty == "good") {
-            herosSorted.unshift(hero);
-          } else {
-            herosSorted.push(hero);
-          }
-        });
-        selectedPlayerPool.heros = herosSorted;
-
         this.pools.push(selectedPlayerPool);
       }
+    },
+    sortHeros: function(heros) {
+      var herosSorted = [];
+
+      for (let i = 0; i < heros.length; i++) {
+        const specialty = heros[i].specialty;
+        if (specialty == "good") {
+          herosSorted.unshift(heros[i]);
+        } else {
+          herosSorted.push(heros[i]);
+        }
+      }
+
+      return herosSorted;
     },
     removeList: function(player) {
       var index = 0;
@@ -60,7 +71,8 @@ var app = new Vue({
       this.pools.splice(index, 1);
     },
     getPoolByPlayer: async function(player) {
-      var pool;
+      var pool = [];
+
       var uri = 'api/pools/' + player;
       await axios.get(uri)
         .then(function(res) {
@@ -69,6 +81,8 @@ var app = new Vue({
         .catch(function(err) {
           console.log('Error!');
         });
+
+      pool.heros = this.sortHeros(pool.heros);
       return pool;
     },
     register: function() {
@@ -109,5 +123,11 @@ var app = new Vue({
   created: async function() {
     await this.init();
     this.serviceWorkerRegister();
+
+    if (this.$route.path == '/pool/list.html') {
+      this.player = this.$route.query.player;
+      this.pool = await this.getPoolByPlayer(this.player);
+      document.title = 'ヒーロープール(' + this.player + ') | Charpool';
+    }
   },
 })
