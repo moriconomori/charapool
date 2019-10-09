@@ -1,31 +1,61 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="level is-mobile">
+        <div class="level-left">
+          <div class="level-item">
+            <div class="navbar-brand">
+              <router-link to="/" class="navbar-item">Charpool</router-link>
+            </div>
+          </div>
+        </div>
+        <div class="level-right">
+          <p class="level-item">
+            <router-link to="register" class="navbar-item">登録</router-link>
+          </p>
+        </div>
+      </div>
+    </nav>
+    <div class="view-wrapper">
+      <router-view />
     </div>
-    <router-view/>
+    <Footer />
   </div>
 </template>
 
+<script>
+import Footer from "@/components/Footer.vue";
+
+export default {
+  name: "App",
+  components: { Footer },
+  methods: {},
+  created: function() {}
+};
+</script>
+
 <style>
+body {
+  font-size: initial;
+}
+
+.control,
+.button {
+  font-size: 1em;
+}
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
+  min-height: 100vh;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.navbar {
+  border-radius: 0;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+.view-wrapper {
+  padding: 0 3vw 0;
 }
 </style>
