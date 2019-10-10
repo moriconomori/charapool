@@ -63,7 +63,7 @@
           </div>
 
           <div class="field">
-            <label class="label">Specialty</label>
+            <label class="label">Specialist</label>
             <div class="control">
               <label class="checkbox">
                 <input type="checkbox" name="specialist" v-model="formData.specialist" />
