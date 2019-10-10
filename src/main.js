@@ -6,8 +6,16 @@ import App from './App.vue'
 import router from './router'
 import './registerServiceWorker'
 import Axios from "axios";
+import VueAnalytics from 'vue-analytics'
 
 Vue.use(Buefy)
+
+if (process.env.NODE_ENV === 'production') {
+  Vue.use(VueAnalytics, {
+    id: 'UA-148912327-1',
+    router
+  })
+}
 
 const axios = Axios.create({
   baseURL: "https://api.myjson.com/bins"
