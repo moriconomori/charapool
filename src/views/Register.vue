@@ -161,7 +161,7 @@ export default {
 
       await this.$http
         .put(targetId, this.pool)
-        .then(function(res) {
+        .then(function() {
           restIsSuccess = true;
         })
         .catch(function(err) {

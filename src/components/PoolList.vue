@@ -1,13 +1,13 @@
 <template>
   <div class="pool-list">
     <transition-group name="fade" tag="div">
-      <article class="message is-small" v-for="pool in pools" :key="pool.player">
+      <article class="message is-link is-small" v-for="pool in pools" :key="pool.player">
         <div class="message-header">
           <span>{{ pool.player }}</span>
           <div class="message-header-menu">
             <div class="message-header-menu-item">
               <img
-                src="img/icons/search-icon.svg"
+                src="/img/icons/search-icon.svg"
                 alt="検索"
                 class="image is-16x16"
                 @click="toggleSearchMenu(pool.player)"
@@ -67,6 +67,11 @@
                       <span>タンク</span>
                     </a>
                   </li>
+                  <li>
+                    <a>
+                      <span>星のみ</span>
+                    </a>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -74,26 +79,22 @@
 
           <div class="panel">
             <transition name="fade">
-              <div class="pool-item-lane" v-if="showTopLane[pool.player]">
+              <div class="pool-item-lane" v-show="showTopLane[pool.player]">
                 <div class="hero-list-wrapper">
                   <div class="hero-list-header">
-                    <p class="hero-list-header-content">TOP</p>
+                    <div class="hero-list-header-content">
+                      <span class="tag has-text-dark">TOP</span>
+                    </div>
                   </div>
-                  <div class="hero-list-body" v-if="pool.top">
-                    <transition name="fade">
-                      <div class="attacker-wrapper" v-show="showAttacker[pool.player]">
-                        <div v-for="hero in pool.top.heros" :key="hero.name">
-                          <span class="tag is-danger" v-show="hero.role == 'attack'">{{ hero.name }}</span>
-                        </div>
-                      </div>
-                    </transition>
-                    <transition name="fade">
-                      <div class="tank-wrapper" v-show="showTank[pool.player]">
-                        <div v-for="hero in pool.top.heros" :key="hero.name">
-                          <span class="tag is-info" v-show="hero.role == 'tank'">{{ hero.name }}</span>
-                        </div>
-                      </div>
-                    </transition>
+                  <div class="hero-list-body">
+                    <transition-group name="fade" tag="div" class="tag-list">
+                      <span
+                        class="tag"
+                        :class="{ 'is-danger': isAttacker(hero), 'is-info': !isAttacker(hero),'is-specialist': isSpecialist(hero) }"
+                        v-for="hero in pool.top.heros"
+                        :key="hero.name"
+                      >{{ hero.name }}</span>
+                    </transition-group>
                   </div>
                 </div>
               </div>
@@ -103,23 +104,19 @@
               <div class="pool-item-lane" v-if="showMidLane[pool.player]">
                 <div class="hero-list-wrapper">
                   <div class="hero-list-header">
-                    <div class="hero-list-header-content">MID</div>
+                    <div class="hero-list-header-content">
+                      <span class="tag has-text-dark">MID</span>
+                    </div>
                   </div>
                   <div class="hero-list-body" v-if="pool.mid">
-                    <transition name="fade">
-                      <div class="attacker-wrapper" v-show="showAttacker[pool.player]">
-                        <div v-for="hero in pool.mid.heros" :key="hero.name">
-                          <span class="tag is-danger" v-show="hero.role == 'attack'">{{ hero.name }}</span>
-                        </div>
-                      </div>
-                    </transition>
-                    <transition name="fade">
-                      <div class="tank-wrapper" v-show="showTank[pool.player]">
-                        <div v-for="hero in pool.mid.heros" :key="hero.name">
-                          <span class="tag is-info" v-show="hero.role == 'tank'">{{ hero.name }}</span>
-                        </div>
-                      </div>
-                    </transition>
+                    <transition-group name="fade" tag="div" class="tag-list">
+                      <span
+                        class="tag"
+                        :class="{ 'is-danger': isAttacker(hero), 'is-info': !isAttacker(hero),'is-specialist': isSpecialist(hero) }"
+                        v-for="hero in pool.mid.heros"
+                        :key="hero.name"
+                      >{{ hero.name }}</span>
+                    </transition-group>
                   </div>
                 </div>
               </div>
@@ -129,23 +126,19 @@
               <div class="pool-item-lane" v-if="showBotLane[pool.player]">
                 <div class="hero-list-wrapper">
                   <div class="hero-list-header">
-                    <div class="hero-list-header-content">BOT</div>
+                    <div class="hero-list-header-content">
+                      <span class="tag has-text-dark">BOT</span>
+                    </div>
                   </div>
                   <div class="hero-list-body" v-if="pool.bot">
-                    <transition name="fade">
-                      <div class="attacker-wrapper" v-show="showAttacker[pool.player]">
-                        <div v-for="hero in pool.bot.heros" :key="hero.name">
-                          <span class="tag is-danger" v-show="hero.role == 'attack'">{{ hero.name }}</span>
-                        </div>
-                      </div>
-                    </transition>
-                    <transition name="fade">
-                      <div class="tank-wrapper" v-show="showTank[pool.player]">
-                        <div v-for="hero in pool.bot.heros" :key="hero.name">
-                          <span class="tag is-info" v-show="hero.role == 'tank'">{{ hero.name }}</span>
-                        </div>
-                      </div>
-                    </transition>
+                    <transition-group name="fade" tag="div" class="tag-list">
+                      <span
+                        class="tag"
+                        :class="{ 'is-danger': isAttacker(hero), 'is-info': !isAttacker(hero),'is-specialist': isSpecialist(hero) }"
+                        v-for="hero in pool.bot.heros"
+                        :key="hero.name"
+                      >{{ hero.name }}</span>
+                    </transition-group>
                   </div>
                 </div>
               </div>
@@ -190,6 +183,18 @@ export default {
     };
   },
   methods: {
+    isAttacker: function(hero) {
+      if (hero.role === "attack") {
+        return true;
+      }
+      return false;
+    },
+    isSpecialist: function(hero) {
+      if (hero.specialist) {
+        return true;
+      }
+      return false;
+    },
     toggleSearchMenu: function(player) {
       if (this.showSearchMenu[player]) {
         this.$delete(this.showSearchMenu, player);
@@ -219,17 +224,77 @@ export default {
       this.$set(this.showBotLane, player, true);
     },
     toggleAttacker: function(player) {
+      let index;
+      let pool = this.pools.find(function(pool, i) {
+        index = i;
+        return pool.player === player;
+      });
+
       if (this.showAttacker[player]) {
+        let filtered;
+
+        filtered = pool.top.heros.filter(function(hero) {
+          return hero.role !== "attack";
+        });
+        this.$set(pool.top, "heros", filtered);
+
+        filtered = pool.mid.heros.filter(function(hero) {
+          return hero.role !== "attack";
+        });
+        this.$set(pool.mid, "heros", filtered);
+
+        filtered = pool.bot.heros.filter(function(hero) {
+          return hero.role !== "attack";
+        });
+        this.$set(pool.bot, "heros", filtered);
+
         this.$delete(this.showAttacker, player);
         return;
       }
+
+      this.pools[index].top.heros.splice(0, 0, ...pool["top"]["attackers"]);
+      this.pools[index].mid.heros.splice(0, 0, ...pool["mid"]["attackers"]);
+      this.pools[index].bot.heros.splice(0, 0, ...pool["bot"]["attackers"]);
+
       this.$set(this.showAttacker, player, true);
     },
     toggleTank: function(player) {
+      let index;
+      let pool = this.pools.find(function(pool, i) {
+        index = i;
+        return pool.player === player;
+      });
+
       if (this.showTank[player]) {
+        let filtered;
+
+        filtered = pool.top.heros.filter(function(hero) {
+          return hero.role !== "tank";
+        });
+        this.$set(pool.top, "heros", filtered);
+
+        filtered = pool.mid.heros.filter(function(hero) {
+          return hero.role !== "tank";
+        });
+        this.$set(pool.mid, "heros", filtered);
+
+        filtered = pool.bot.heros.filter(function(hero) {
+          return hero.role !== "tank";
+        });
+        this.$set(pool.bot, "heros", filtered);
+
         this.$delete(this.showTank, player);
         return;
       }
+
+      let lastIndex;
+      lastIndex = this.pools[index].top.heros.length;
+      this.pools[index].top.heros.splice(lastIndex, 0, ...pool["top"]["tanks"]);
+      lastIndex = this.pools[index].mid.heros.length;
+      this.pools[index].mid.heros.splice(lastIndex, 0, ...pool["mid"]["tanks"]);
+      lastIndex = this.pools[index].bot.heros.length;
+      this.pools[index].bot.heros.splice(lastIndex, 0, ...pool["bot"]["tanks"]);
+
       this.$set(this.showTank, player, true);
     },
     getPlayers: async function() {
@@ -242,7 +307,7 @@ export default {
         .catch(function(err) {
           console.log(err);
         });
-      this.players = players;
+      return players;
     },
     getPoolByPlayer: async function(player) {
       const target = this.players.find(item => {
@@ -262,6 +327,10 @@ export default {
       return pool;
     },
     addPoolList: async function(player) {
+      if (!this.selectedPlayerName) {
+        return;
+      }
+
       if (
         this.pools.find(pool => {
           if (pool.player === player) {
@@ -272,7 +341,54 @@ export default {
         return;
       }
 
-      const pool = await this.getPoolByPlayer(player);
+      let pool = await this.getPoolByPlayer(player);
+
+      pool["top"]["heros"].sort(function(a, b) {
+        if (a.role < b.role) return -1;
+        if (a.role > b.role) return 1;
+        if (a.name < b.name) return -1;
+        if (a.name < b.name) return 1;
+      });
+      pool["mid"]["heros"].sort(function(a, b) {
+        if (a.role < b.role) return -1;
+        if (a.role > b.role) return 1;
+        if (a.name < b.name) return -1;
+        if (a.name < b.name) return 1;
+      });
+      pool["bot"]["heros"].sort(function(a, b) {
+        if (a.role < b.role) return -1;
+        if (a.role > b.role) return 1;
+        if (a.name < b.name) return -1;
+        if (a.name < b.name) return 1;
+      });
+
+      let attackers;
+      let tanks;
+      attackers = pool["top"]["heros"].filter(function(hero) {
+        return hero.role === "attack";
+      });
+      pool["top"]["attackers"] = attackers;
+      tanks = pool["top"]["heros"].filter(function(hero) {
+        return hero.role === "tank";
+      });
+      pool["top"]["tanks"] = tanks;
+      attackers = pool["mid"]["heros"].filter(function(hero) {
+        return hero.role === "attack";
+      });
+      pool["mid"]["attackers"] = attackers;
+      tanks = pool["mid"]["heros"].filter(function(hero) {
+        return hero.role === "tank";
+      });
+      pool["mid"]["tanks"] = tanks;
+      attackers = pool["top"]["heros"].filter(function(hero) {
+        return hero.role === "attack";
+      });
+      pool["bot"]["attackers"] = attackers;
+      tanks = pool["bot"]["heros"].filter(function(hero) {
+        return hero.role === "tank";
+      });
+      pool["bot"]["tanks"] = tanks;
+
       this.pools.push(pool);
       this.$set(this.showSearchMenu, player, false);
       this.$set(this.showTopLane, player, true);
@@ -293,8 +409,12 @@ export default {
       }
     }
   },
-  created: function() {
-    this.getPlayers();
+  created: async function() {
+    let players = await this.getPlayers();
+    players.sort(function(a, b) {
+      return a.name < b.name ? -1 : 1;
+    });
+    this.players = players;
   }
 };
 </script>
@@ -330,41 +450,52 @@ export default {
   align-items: flex-start;
 }
 
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .hero-list-wrapper {
   display: flex;
-}
-
-.hero-list-header {
-  margin-right: 0.5rem;
-  min-width: 1.8em;
-}
-
-.hero-list-header-content {
-  margin: 0.3rem 0;
 }
 
 .hero-list-body {
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
 }
 
-.hero-list-body .tag {
+.hero-list-wrapper .tag {
   margin: 0.2em;
 }
 
-.pool-item-lane {
-  padding: 0.2rem 0;
+.hero-list-header-content .tag {
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
+  min-width: 2.8em;
+  background-color: transparent;
 }
 
-.pool-item-lane:not(:last-child) {
-  border-bottom: 1px solid hsl(0, 0%, 48%);
+.pool-item-lane {
+  padding: 0.1em 0;
+}
+
+.pool-item-lane:not(:first-child) {
+  border-top: 1px solid hsl(0, 0%, 76%);
 }
 
 .attacker-wrapper,
 .tank-wrapper {
   display: flex;
   flex-wrap: wrap;
+}
+
+.is-specialist {
+  background: url("/img/icons/star-icon.svg") no-repeat;
+  background-size: 1.2em;
+  background-position: 5% 50%;
+  padding-left: 1.7em;
 }
 
 .show-filter {
@@ -375,8 +506,20 @@ export default {
   margin-bottom: 0.4em;
 }
 
+.tabs li {
+  width: 33%;
+}
+
 .tabs a {
   text-decoration: none !important;
+  background-color: transparent;
+  border-color: #b5b5b5;
+}
+
+.tabs a:hover {
+  text-decoration: none !important;
+  background-color: transparent;
+  border-color: #b5b5b5;
 }
 
 .fade-enter-active,
