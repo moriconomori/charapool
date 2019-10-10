@@ -7,7 +7,7 @@
           <div class="message-header-menu">
             <div class="message-header-menu-item">
               <img
-                src="/img/icons/search-icon.svg"
+                src="../assets/icons/search-icon.svg"
                 alt="検索"
                 class="image is-16x16"
                 @click="toggleSearchMenu(pool.player)"
@@ -492,9 +492,9 @@ export default {
 }
 
 .is-specialist {
-  background: url("/img/icons/star-icon.svg") no-repeat;
+  background: url("../assets/icons/star-icon.svg") no-repeat;
   background-size: 1.2em;
-  background-position: 5% 50%;
+  background-position: 0.4em 50%;
   padding-left: 1.7em;
 }
 
