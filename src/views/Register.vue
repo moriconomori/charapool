@@ -132,8 +132,9 @@ export default {
       });
 
       if (isNewPlayer) {
-        const id = this.createNewMyjsonId();
+        const id = await this.createNewMyjsonId();
         this.addNewPlayer(formData.player, id);
+        targetId = id;
       }
 
       if (!Object.keys(this.pool).length) {
@@ -203,13 +204,13 @@ export default {
       return id;
     },
     addNewPlayer: async function(player, id) {
-      this.players.push({
+      this.playerList.push({
         name: player,
         pool: id
       });
 
       await this.$http
-        .put(this.$myjson.players, this.players)
+        .put(this.$myjson.players, this.playerList)
         .catch(function(err) {
           console.log(err);
         });

@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <p>Ver. 2.0.0</p>
+    <p>Ver. 2.0.1</p>
     <p>&copy; 2019 Morico</p>
   </footer>
 </template>
