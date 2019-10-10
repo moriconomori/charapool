@@ -380,7 +380,7 @@ export default {
         return hero.role === "tank";
       });
       pool["mid"]["tanks"] = tanks;
-      attackers = pool["top"]["heros"].filter(function(hero) {
+      attackers = pool["bot"]["heros"].filter(function(hero) {
         return hero.role === "attack";
       });
       pool["bot"]["attackers"] = attackers;
