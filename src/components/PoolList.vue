@@ -280,6 +280,8 @@ export default {
       this.$set(this.showBotLane, player, true);
       this.$set(this.showAttacker, player, true);
       this.$set(this.showTank, player, true);
+
+      this.$ga.event("pool_list", "show", player);
     },
     removePoolListByPlayer: function(player) {
       for (let i = 0; i < this.pools.length; i++) {

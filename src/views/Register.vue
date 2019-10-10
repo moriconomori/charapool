@@ -114,6 +114,7 @@ export default {
     },
     submit: async function() {
       const formData = this.formData;
+      let restIsSuccess;
 
       if (!this.validation(this.formData)) {
         return;
@@ -158,9 +159,19 @@ export default {
         specialist: formData.specialist
       });
 
-      await this.$http.put(targetId, this.pool).catch(function(err) {
-        console.log(err);
-      });
+      await this.$http
+        .put(targetId, this.pool)
+        .then(function(res) {
+          restIsSuccess = true;
+        })
+        .catch(function(err) {
+          restIsSuccess = false;
+          console.log(err);
+        });
+
+      if (restIsSuccess) {
+        this.$ga.event("register", "submit", formData.player);
+      }
     },
     existEntry: function(heros, name) {
       for (let i = 0; i < this.pool[this.formData.lane]["heros"].length; i++) {
