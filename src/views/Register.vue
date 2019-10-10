@@ -116,9 +116,15 @@ export default {
       const formData = this.formData;
       let restIsSuccess;
 
-      if (!this.validation(this.formData)) {
+      if (!this.validation(formData)) {
         return;
       }
+
+      const inputEntry = {
+        name: formData.hero,
+        role: formData.role,
+        specialist: formData.specialist
+      };
 
       let isNewPlayer = true;
       let targetId = null;
@@ -137,28 +143,30 @@ export default {
         targetId = id;
       }
 
-      if (!Object.keys(this.pool).length) {
-        var pool = {};
-        await this.$http
-          .get(targetId)
-          .then(function(res) {
-            pool = res.data;
-          })
-          .catch(function(err) {
-            console.log(err);
-          });
-        this.pool = pool;
-      }
+      let pool = {};
+      await this.$http
+        .get(targetId)
+        .then(function(res) {
+          pool = res.data;
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+      this.pool = pool;
 
-      if (this.existEntry(this.pool[formData.lane]["heros"], formData.hero)) {
-        return;
-      }
+      const updateIndex = this.pool[formData.lane]["heros"].findIndex(
+        v => v.name === formData.hero
+      );
 
-      this.pool[formData.lane]["heros"].push({
-        name: formData.hero,
-        role: formData.role,
-        specialist: formData.specialist
-      });
+      if (updateIndex != -1) {
+        this.updateEntry(inputEntry, updateIndex);
+      } else {
+        this.pool[formData.lane]["heros"].push({
+          name: formData.hero,
+          role: formData.role,
+          specialist: formData.specialist
+        });
+      }
 
       await this.$http
         .put(targetId, this.pool)
@@ -174,14 +182,8 @@ export default {
         this.$ga.event("register", "submit", formData.player);
       }
     },
-    existEntry: function(heros, name) {
-      for (let i = 0; i < this.pool[this.formData.lane]["heros"].length; i++) {
-        let hero = this.pool[this.formData.lane]["heros"][i];
-        if (hero.name == name) {
-          return true;
-        }
-      }
-      return false;
+    updateEntry: function(entry, index) {
+      this.pool[this.formData.lane]["heros"].splice(index, 1, entry);
     },
     createNewMyjsonId: async function() {
       let response = {};
