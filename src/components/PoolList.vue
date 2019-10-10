@@ -74,7 +74,7 @@
 
           <div class="panel">
             <transition name="fade">
-              <div class="pool-item-lane" v-show="showTopLane[pool.player]">
+              <div class="pool-item-lane" v-if="showTopLane[pool.player]">
                 <div class="hero-list-wrapper">
                   <div class="hero-list-header">
                     <p class="hero-list-header-content">TOP</p>
@@ -100,7 +100,7 @@
             </transition>
 
             <transition name="fade">
-              <div class="pool-item-lane" v-show="showMidLane[pool.player]">
+              <div class="pool-item-lane" v-if="showMidLane[pool.player]">
                 <div class="hero-list-wrapper">
                   <div class="hero-list-header">
                     <div class="hero-list-header-content">MID</div>
@@ -126,7 +126,7 @@
             </transition>
 
             <transition name="fade">
-              <div class="pool-item-lane" v-show="showBotLane[pool.player]">
+              <div class="pool-item-lane" v-if="showBotLane[pool.player]">
                 <div class="hero-list-wrapper">
                   <div class="hero-list-header">
                     <div class="hero-list-header-content">BOT</div>
@@ -334,7 +334,7 @@ export default {
 
 .hero-list-header {
   margin-right: 0.5rem;
-  width: 7%;
+  min-width: 1.8em;
 }
 
 .hero-list-header-content {
@@ -344,7 +344,7 @@ export default {
 .hero-list-body {
   display: flex;
   flex-wrap: wrap;
-  width: 92%;
+  width: 100%;
 }
 
 .hero-list-body .tag {
