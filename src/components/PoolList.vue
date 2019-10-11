@@ -340,11 +340,10 @@ export default {
     this.players = players;
 
     let params = [];
-    params[0] = this.$route.query.p1;
-    params[1] = this.$route.query.p2;
-    params[2] = this.$route.query.p3;
-    params[3] = this.$route.query.p4;
-    params[4] = this.$route.query.p5;
+
+    for (let i = 0; i < 9; i++) {
+      params[i] = this.$route.query["p" + (i + 1)];
+    }
 
     for (let i = 0; i < params.length; i++) {
       const player = params[i];
