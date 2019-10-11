@@ -67,7 +67,9 @@
             <div class="control">
               <label class="checkbox">
                 <input type="checkbox" name="specialist" v-model="formData.specialist" />
-                <span>得意</span>
+                <span>得意(</span>
+                <img src="../assets/icons/star-icon.svg" alt="star" width="16" />
+                <span>が表示されます)</span>
               </label>
             </div>
           </div>

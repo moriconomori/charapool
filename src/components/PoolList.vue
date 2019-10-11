@@ -10,38 +10,38 @@
                 src="../assets/icons/search-icon.svg"
                 alt="検索"
                 class="image is-16x16"
-                @click="toggleSearchMenu(pool.player)"
+                @click="toggleShowFilter(pool.player, 'search')"
               />
             </div>
             <div class="message-header-menu-item">
-              <button class="delete" @click="removePoolListByPlayer(pool.player)"></button>
+              <button class="delete" @click="removePoolListByPlayer(pool.player)">></button>
             </div>
           </div>
         </div>
         <div class="message-body">
           <transition name="fade">
-            <div class="show-filter" v-show="showSearchMenu[pool.player]">
+            <div class="show-filter" v-show="pool['showFilters']['search']">
               <div class="tabs is-toggle is-fullwidth is-small">
                 <ul>
                   <li
-                    :class="showTopLane[pool.player] ? 'is-active' : ''"
-                    @click="toggleTopLane(pool.player)"
+                    :class="{'is-active': pool['showFilters']['top']}"
+                    @click="toggleShowFilter(pool.player, 'top')"
                   >
                     <a>
                       <span>Top</span>
                     </a>
                   </li>
                   <li
-                    :class="showMidLane[pool.player] ? 'is-active' : ''"
-                    @click="toggleMidLane(pool.player)"
+                    :class="{'is-active': pool['showFilters']['mid']}"
+                    @click="toggleShowFilter(pool.player, 'mid')"
                   >
                     <a>
                       <span>Mid</span>
                     </a>
                   </li>
                   <li
-                    :class="showBotLane[pool.player] ? 'is-active' : ''"
-                    @click="toggleBotLane(pool.player)"
+                    :class="{'is-active': pool['showFilters']['bot']}"
+                    @click="toggleShowFilter(pool.player, 'bot')"
                   >
                     <a>
                       <span>Bot</span>
@@ -52,24 +52,28 @@
               <div class="tabs is-toggle is-fullwidth is-small">
                 <ul>
                   <li
-                    :class="showAttacker[pool.player] ? 'is-active' : ''"
-                    @click="toggleAttacker(pool.player)"
+                    :class="{'is-active': pool['showFilters']['attackers']}"
+                    @click="toggleShowFilter(pool.player, 'attackers')"
                   >
                     <a>
                       <span>火力</span>
                     </a>
                   </li>
                   <li
-                    :class="showTank[pool.player] ? 'is-active' : ''"
-                    @click="toggleTank(pool.player)"
+                    :class="{'is-active': pool['showFilters']['tanks']}"
+                    @click="toggleShowFilter(pool.player, 'tanks')"
                   >
                     <a>
                       <span>タンク</span>
                     </a>
                   </li>
-                  <li>
+                  <li
+                    :class="{'is-active': pool['showFilters']['specialists']}"
+                    @click="toggleShowFilter(pool.player, 'specialists')"
+                  >
                     <a>
-                      <span>星のみ</span>
+                      <img src="../assets/icons/star-icon.svg" alt="star" class="image is-16x16" />
+                      <span>のみ</span>
                     </a>
                   </li>
                 </ul>
@@ -79,7 +83,7 @@
 
           <div class="panel">
             <transition name="fade">
-              <div class="pool-item-lane" v-show="showTopLane[pool.player]">
+              <div class="pool-item-lane" v-show="pool['showFilters']['top']">
                 <div class="hero-list-wrapper">
                   <div class="hero-list-header">
                     <div class="hero-list-header-content">
@@ -91,7 +95,7 @@
                       <span
                         class="tag"
                         :class="{ 'is-danger': isAttacker(hero), 'is-info': !isAttacker(hero),'is-specialist': isSpecialist(hero) }"
-                        v-for="hero in pool.top.heros"
+                        v-for="hero in pool.top.filteredHeros"
                         :key="hero.name"
                       >{{ hero.name }}</span>
                     </transition-group>
@@ -101,7 +105,7 @@
             </transition>
 
             <transition name="fade">
-              <div class="pool-item-lane" v-if="showMidLane[pool.player]">
+              <div class="pool-item-lane" v-show="pool['showFilters']['mid']">
                 <div class="hero-list-wrapper">
                   <div class="hero-list-header">
                     <div class="hero-list-header-content">
@@ -113,7 +117,7 @@
                       <span
                         class="tag"
                         :class="{ 'is-danger': isAttacker(hero), 'is-info': !isAttacker(hero),'is-specialist': isSpecialist(hero) }"
-                        v-for="hero in pool.mid.heros"
+                        v-for="hero in pool.mid.filteredHeros"
                         :key="hero.name"
                       >{{ hero.name }}</span>
                     </transition-group>
@@ -123,7 +127,7 @@
             </transition>
 
             <transition name="fade">
-              <div class="pool-item-lane" v-if="showBotLane[pool.player]">
+              <div class="pool-item-lane" v-show="pool['showFilters']['bot']">
                 <div class="hero-list-wrapper">
                   <div class="hero-list-header">
                     <div class="hero-list-header-content">
@@ -135,7 +139,7 @@
                       <span
                         class="tag"
                         :class="{ 'is-danger': isAttacker(hero), 'is-info': !isAttacker(hero),'is-specialist': isSpecialist(hero) }"
-                        v-for="hero in pool.bot.heros"
+                        v-for="hero in pool.bot.filteredHeros"
                         :key="hero.name"
                       >{{ hero.name }}</span>
                     </transition-group>
@@ -172,14 +176,8 @@ export default {
   data: function() {
     return {
       selectedPlayerName: "",
-      pools: [],
       players: [],
-      showSearchMenu: {},
-      showTopLane: {},
-      showMidLane: {},
-      showBotLane: {},
-      showAttacker: {},
-      showTank: {}
+      pools: {}
     };
   },
   methods: {
@@ -195,107 +193,58 @@ export default {
       }
       return false;
     },
-    toggleSearchMenu: function(player) {
-      if (this.showSearchMenu[player]) {
-        this.$delete(this.showSearchMenu, player);
-        return;
+    toggleShowFilter: function(player, target) {
+      if (this.pools[player]["showFilters"][target]) {
+        this.$set(this.pools[player]["showFilters"], target, false);
+      } else {
+        this.$set(this.pools[player]["showFilters"], target, true);
       }
-      this.$set(this.showSearchMenu, player, true);
+      switch (target) {
+        case "attackers":
+        case "tanks":
+        case "specialists":
+          this.filterHeros(player);
+          break;
+        default:
+          break;
+      }
     },
-    toggleTopLane: function(player) {
-      if (this.showTopLane[player]) {
-        this.$delete(this.showTopLane, player);
-        return;
-      }
-      this.$set(this.showTopLane, player, true);
-    },
-    toggleMidLane: function(player) {
-      if (this.showMidLane[player]) {
-        this.$delete(this.showMidLane, player);
-        return;
-      }
-      this.$set(this.showMidLane, player, true);
-    },
-    toggleBotLane: function(player) {
-      if (this.showBotLane[player]) {
-        this.$delete(this.showBotLane, player);
-        return;
-      }
-      this.$set(this.showBotLane, player, true);
-    },
-    toggleAttacker: function(player) {
-      let index;
-      let pool = this.pools.find(function(pool, i) {
-        index = i;
-        return pool.player === player;
-      });
+    filterHeros: function(player) {
+      const pools = this.pools;
+      let pool = pools[player];
+      let filtered = { top: [], mid: [], bot: [] };
 
-      if (this.showAttacker[player]) {
-        let filtered;
+      filtered["top"] = pool["top"]["heros"];
+      filtered["mid"] = pool["mid"]["heros"];
+      filtered["bot"] = pool["bot"]["heros"];
 
-        filtered = pool.top.heros.filter(function(hero) {
-          return hero.role !== "attack";
-        });
-        this.$set(pool.top, "heros", filtered);
-
-        filtered = pool.mid.heros.filter(function(hero) {
-          return hero.role !== "attack";
-        });
-        this.$set(pool.mid, "heros", filtered);
-
-        filtered = pool.bot.heros.filter(function(hero) {
-          return hero.role !== "attack";
-        });
-        this.$set(pool.bot, "heros", filtered);
-
-        this.$delete(this.showAttacker, player);
-        return;
+      if (!this.pools[player]["showFilters"]["attackers"]) {
+        filtered["top"] = filtered["top"].filter(
+          hero => hero.role !== "attack"
+        );
+        filtered["mid"] = filtered["mid"].filter(
+          hero => hero.role !== "attack"
+        );
+        filtered["bot"] = filtered["bot"].filter(
+          hero => hero.role !== "attack"
+        );
       }
 
-      this.pools[index].top.heros.splice(0, 0, ...pool["top"]["attackers"]);
-      this.pools[index].mid.heros.splice(0, 0, ...pool["mid"]["attackers"]);
-      this.pools[index].bot.heros.splice(0, 0, ...pool["bot"]["attackers"]);
-
-      this.$set(this.showAttacker, player, true);
-    },
-    toggleTank: function(player) {
-      let index;
-      let pool = this.pools.find(function(pool, i) {
-        index = i;
-        return pool.player === player;
-      });
-
-      if (this.showTank[player]) {
-        let filtered;
-
-        filtered = pool.top.heros.filter(function(hero) {
-          return hero.role !== "tank";
-        });
-        this.$set(pool.top, "heros", filtered);
-
-        filtered = pool.mid.heros.filter(function(hero) {
-          return hero.role !== "tank";
-        });
-        this.$set(pool.mid, "heros", filtered);
-
-        filtered = pool.bot.heros.filter(function(hero) {
-          return hero.role !== "tank";
-        });
-        this.$set(pool.bot, "heros", filtered);
-
-        this.$delete(this.showTank, player);
-        return;
+      if (!this.pools[player]["showFilters"]["tanks"]) {
+        filtered["top"] = filtered["top"].filter(hero => hero.role !== "tank");
+        filtered["mid"] = filtered["mid"].filter(hero => hero.role !== "tank");
+        filtered["bot"] = filtered["bot"].filter(hero => hero.role !== "tank");
       }
 
-      let lastIndex;
-      lastIndex = this.pools[index].top.heros.length;
-      this.pools[index].top.heros.splice(lastIndex, 0, ...pool["top"]["tanks"]);
-      lastIndex = this.pools[index].mid.heros.length;
-      this.pools[index].mid.heros.splice(lastIndex, 0, ...pool["mid"]["tanks"]);
-      lastIndex = this.pools[index].bot.heros.length;
-      this.pools[index].bot.heros.splice(lastIndex, 0, ...pool["bot"]["tanks"]);
+      if (this.pools[player]["showFilters"]["specialists"]) {
+        filtered["top"] = filtered["top"].filter(hero => hero.specialist);
+        filtered["mid"] = filtered["mid"].filter(hero => hero.specialist);
+        filtered["bot"] = filtered["bot"].filter(hero => hero.specialist);
+      }
 
-      this.$set(this.showTank, player, true);
+      this.pools[player]["top"]["filteredHeros"] = filtered["top"];
+      this.pools[player]["mid"]["filteredHeros"] = filtered["mid"];
+      this.pools[player]["bot"]["filteredHeros"] = filtered["bot"];
     },
     getPlayers: async function() {
       let players = [];
@@ -326,23 +275,7 @@ export default {
         });
       return pool;
     },
-    addPoolList: async function(player) {
-      if (!this.selectedPlayerName) {
-        return;
-      }
-
-      if (
-        this.pools.find(pool => {
-          if (pool.player === player) {
-            return true;
-          }
-        })
-      ) {
-        return;
-      }
-
-      let pool = await this.getPoolByPlayer(player);
-
+    sortHeros: function(pool) {
       pool["top"]["heros"].sort(function(a, b) {
         if (a.role < b.role) return -1;
         if (a.role > b.role) return 1;
@@ -361,52 +294,42 @@ export default {
         if (a.name < b.name) return -1;
         if (a.name < b.name) return 1;
       });
+      return pool;
+    },
+    addPoolList: async function(player) {
+      if (!this.selectedPlayerName) {
+        return;
+      }
 
-      let attackers;
-      let tanks;
-      attackers = pool["top"]["heros"].filter(function(hero) {
-        return hero.role === "attack";
-      });
-      pool["top"]["attackers"] = attackers;
-      tanks = pool["top"]["heros"].filter(function(hero) {
-        return hero.role === "tank";
-      });
-      pool["top"]["tanks"] = tanks;
-      attackers = pool["mid"]["heros"].filter(function(hero) {
-        return hero.role === "attack";
-      });
-      pool["mid"]["attackers"] = attackers;
-      tanks = pool["mid"]["heros"].filter(function(hero) {
-        return hero.role === "tank";
-      });
-      pool["mid"]["tanks"] = tanks;
-      attackers = pool["bot"]["heros"].filter(function(hero) {
-        return hero.role === "attack";
-      });
-      pool["bot"]["attackers"] = attackers;
-      tanks = pool["bot"]["heros"].filter(function(hero) {
-        return hero.role === "tank";
-      });
-      pool["bot"]["tanks"] = tanks;
+      if (this.pools[player]) {
+        return;
+      }
 
-      this.pools.push(pool);
-      this.$set(this.showSearchMenu, player, false);
-      this.$set(this.showTopLane, player, true);
-      this.$set(this.showMidLane, player, true);
-      this.$set(this.showBotLane, player, true);
-      this.$set(this.showAttacker, player, true);
-      this.$set(this.showTank, player, true);
+      let pool = await this.getPoolByPlayer(player);
+
+      pool = this.sortHeros(pool);
+
+      pool["top"]["filteredHeros"] = pool["top"]["heros"];
+      pool["mid"]["filteredHeros"] = pool["mid"]["heros"];
+      pool["bot"]["filteredHeros"] = pool["bot"]["heros"];
+
+      this.$set(this.pools, player, pool);
+
+      const showFilters = {
+        top: true,
+        mid: true,
+        bot: true,
+        attackers: true,
+        tanks: true,
+        specialists: false,
+        search: false
+      };
+      this.$set(this.pools[player], "showFilters", showFilters);
 
       this.$ga.event("pool_list", "show", player);
     },
     removePoolListByPlayer: function(player) {
-      for (let i = 0; i < this.pools.length; i++) {
-        const pool = this.pools[i];
-        if (pool.player === player) {
-          this.pools.splice(i, 1);
-          return;
-        }
-      }
+      this.$delete(this.pools, player);
     }
   },
   created: async function() {
