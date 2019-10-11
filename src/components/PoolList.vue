@@ -297,7 +297,7 @@ export default {
       return pool;
     },
     addPoolList: async function(player) {
-      if (!this.selectedPlayerName) {
+      if (!this.selectedPlayerName && !this.$route.query) {
         return;
       }
 
@@ -338,6 +338,20 @@ export default {
       return a.name < b.name ? -1 : 1;
     });
     this.players = players;
+
+    let params = [];
+    params[0] = this.$route.query.p1;
+    params[1] = this.$route.query.p2;
+    params[2] = this.$route.query.p3;
+    params[3] = this.$route.query.p4;
+    params[4] = this.$route.query.p5;
+
+    for (let i = 0; i < params.length; i++) {
+      const player = params[i];
+      if (player) {
+        this.addPoolList(player);
+      }
+    }
   }
 };
 </script>
