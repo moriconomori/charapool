@@ -279,18 +279,21 @@ export default {
       pool["top"]["heros"].sort(function(a, b) {
         if (a.role < b.role) return -1;
         if (a.role > b.role) return 1;
+        if (a.specialist && !b.specialist) return -1;
         if (a.name < b.name) return -1;
         if (a.name < b.name) return 1;
       });
       pool["mid"]["heros"].sort(function(a, b) {
         if (a.role < b.role) return -1;
         if (a.role > b.role) return 1;
+        if (a.specialist && !b.specialist) return -1;
         if (a.name < b.name) return -1;
         if (a.name < b.name) return 1;
       });
       pool["bot"]["heros"].sort(function(a, b) {
         if (a.role < b.role) return -1;
         if (a.role > b.role) return 1;
+        if (a.specialist && !b.specialist) return -1;
         if (a.name < b.name) return -1;
         if (a.name < b.name) return 1;
       });
