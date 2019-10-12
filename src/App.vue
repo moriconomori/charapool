@@ -28,6 +28,11 @@ import Footer from "@/components/Footer.vue";
 
 export default {
   name: "App",
+  metaInfo: {
+    meta: [
+      { name: "description", content: "ヒーロープールを一覧表示するツール" }
+    ]
+  },
   components: { Footer },
   methods: {},
   created: function() {}

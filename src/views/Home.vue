@@ -4,7 +4,7 @@
       <PoolList />
 
       <div class="content">
-        <h2 class="title">What's this</h2>
+        <h1 class="title is-size-4">What's Charpool</h1>
         <ul>
           <li>ランクマッチの Pick & Ban でパーティーメンバーのヒーロープール (得意なヒーローや使えるヒーロー) を確認するためのツールです</li>
           <li>パーティーメンバーのヒーロープールを把握して構成事故を減らしましょう</li>
@@ -12,7 +12,7 @@
       </div>
 
       <div class="content">
-        <h2 class="title">How to use</h2>
+        <h2 class="title is-size-4">How to use</h2>
         <ol type="1">
           <li>
             自分が得意なヒーローや使えるヒーローを登録する

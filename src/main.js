@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueMeta from 'vue-meta'
 import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
 import 'bulmaswatch/darkly/bulmaswatch.min.css'
@@ -8,6 +9,7 @@ import './registerServiceWorker'
 import Axios from "axios";
 import VueAnalytics from 'vue-analytics'
 
+Vue.use(VueMeta)
 Vue.use(Buefy)
 
 Vue.use(VueAnalytics, {

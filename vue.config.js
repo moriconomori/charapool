@@ -1,6 +1,7 @@
 module.exports = {
   publicPath: process.env.NODE_ENV === 'production' ? '/pool/' : '/',
   pwa: {
-    themeColor: '',
+    name: 'Charpool',
+    themeColor: '#ffffff',
   }
 }
