@@ -151,9 +151,7 @@ export default {
         .then(function(res) {
           pool = res.data;
         })
-        .catch(function(err) {
-          console.log(err);
-        });
+        .catch(function() {});
       this.pool = pool;
 
       const updateIndex = this.pool[formData.lane]["heros"].findIndex(
@@ -175,9 +173,8 @@ export default {
         .then(function() {
           restIsSuccess = true;
         })
-        .catch(function(err) {
+        .catch(function() {
           restIsSuccess = false;
-          console.log(err);
         });
 
       if (restIsSuccess) {
@@ -200,9 +197,7 @@ export default {
         .then(function(res) {
           response = res.data;
         })
-        .catch(function(err) {
-          console.log(err);
-        });
+        .catch(function() {});
 
       const id = response.uri.split("/").pop();
       return id;
@@ -215,9 +210,7 @@ export default {
 
       await this.$http
         .put(this.$myjson.players, this.playerList)
-        .catch(function(err) {
-          console.log(err);
-        });
+        .catch(function() {});
     }
   },
   created: async function() {
@@ -227,9 +220,7 @@ export default {
       .then(function(res) {
         data = res.data;
       })
-      .catch(function(err) {
-        console.log(err);
-      });
+      .catch(function() {});
     this.heroList = data;
 
     let players = [];
@@ -238,9 +229,7 @@ export default {
       .then(function(res) {
         players = res.data;
       })
-      .catch(function(err) {
-        console.log(err);
-      });
+      .catch(function() {});
     this.playerList = players;
   }
 };

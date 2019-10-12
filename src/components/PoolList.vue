@@ -253,9 +253,7 @@ export default {
         .then(function(res) {
           players = res.data;
         })
-        .catch(function(err) {
-          console.log(err);
-        });
+        .catch(function() {});
       return players;
     },
     getPoolByPlayer: async function(player) {
@@ -270,9 +268,7 @@ export default {
         .then(function(res) {
           pool = res.data;
         })
-        .catch(function(err) {
-          console.log(err);
-        });
+        .catch(function() {});
       return pool;
     },
     sortHeros: function(pool) {
@@ -280,6 +276,7 @@ export default {
         if (a.role < b.role) return -1;
         if (a.role > b.role) return 1;
         if (a.specialist && !b.specialist) return -1;
+        if (!a.specialist && b.specialist) return 1;
         if (a.name < b.name) return -1;
         if (a.name < b.name) return 1;
       });
@@ -287,6 +284,7 @@ export default {
         if (a.role < b.role) return -1;
         if (a.role > b.role) return 1;
         if (a.specialist && !b.specialist) return -1;
+        if (!a.specialist && b.specialist) return 1;
         if (a.name < b.name) return -1;
         if (a.name < b.name) return 1;
       });
@@ -294,6 +292,7 @@ export default {
         if (a.role < b.role) return -1;
         if (a.role > b.role) return 1;
         if (a.specialist && !b.specialist) return -1;
+        if (!a.specialist && b.specialist) return 1;
         if (a.name < b.name) return -1;
         if (a.name < b.name) return 1;
       });
