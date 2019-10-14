@@ -6,6 +6,12 @@
           <span>{{ pool.player }}</span>
           <div class="message-header-menu">
             <div class="message-header-menu-item">
+              <button
+                class="button is-white"
+                @click="toggleShowFilter(pool.player, 'thumbnail')"
+              >サムネイル</button>
+            </div>
+            <div class="message-header-menu-item">
               <img
                 src="../assets/icons/search-icon.svg"
                 alt="検索"
@@ -91,13 +97,32 @@
                     </div>
                   </div>
                   <div class="hero-list-body">
-                    <transition-group name="fade" tag="div" class="tag-list">
+                    <transition-group
+                      name="fade"
+                      tag="div"
+                      class="tag-list"
+                      v-if="!pool['showFilters']['thumbnail']"
+                    >
                       <span
                         class="tag"
-                        :class="{ 'is-danger': isAttacker(hero), 'is-info': !isAttacker(hero),'is-specialist': isSpecialist(hero) }"
+                        :class="{ 'is-danger': isAttacker(hero), 'is-info': !isAttacker(hero), 'is-specialist': isSpecialist(hero) }"
                         v-for="hero in pool.top.filteredHeros"
                         :key="hero.name"
                       >{{ hero.name }}</span>
+                    </transition-group>
+                    <transition-group name="fade" tag="div" class="tag-list" v-else>
+                      <div
+                        class="thumbnail-wrapper"
+                        v-for="hero in pool.top.filteredHeros"
+                        :key="hero.name"
+                      >
+                        <img
+                          :src="'./img/heros/' + hero.name_en + '.jpg'"
+                          :title="hero.name"
+                          :alt="hero.name"
+                          class="thumbnail"
+                        />
+                      </div>
                     </transition-group>
                   </div>
                 </div>
@@ -113,13 +138,32 @@
                     </div>
                   </div>
                   <div class="hero-list-body" v-if="pool.mid">
-                    <transition-group name="fade" tag="div" class="tag-list">
+                    <transition-group
+                      name="fade"
+                      tag="div"
+                      class="tag-list"
+                      v-if="!pool['showFilters']['thumbnail']"
+                    >
                       <span
                         class="tag"
-                        :class="{ 'is-danger': isAttacker(hero), 'is-info': !isAttacker(hero),'is-specialist': isSpecialist(hero) }"
+                        :class="{ 'is-danger': isAttacker(hero), 'is-info': !isAttacker(hero), 'is-specialist': isSpecialist(hero) }"
                         v-for="hero in pool.mid.filteredHeros"
                         :key="hero.name"
                       >{{ hero.name }}</span>
+                    </transition-group>
+                    <transition-group name="fade" tag="div" class="tag-list" v-else>
+                      <div
+                        class="thumbnail-wrapper"
+                        v-for="hero in pool.mid.filteredHeros"
+                        :key="hero.name"
+                      >
+                        <img
+                          :src="'./img/heros/' + hero.name_en + '.jpg'"
+                          :title="hero.name"
+                          :alt="hero.name"
+                          class="thumbnail"
+                        />
+                      </div>
                     </transition-group>
                   </div>
                 </div>
@@ -135,13 +179,32 @@
                     </div>
                   </div>
                   <div class="hero-list-body" v-if="pool.bot">
-                    <transition-group name="fade" tag="div" class="tag-list">
+                    <transition-group
+                      name="fade"
+                      tag="div"
+                      class="tag-list"
+                      v-if="!pool['showFilters']['thumbnail']"
+                    >
                       <span
                         class="tag"
-                        :class="{ 'is-danger': isAttacker(hero), 'is-info': !isAttacker(hero),'is-specialist': isSpecialist(hero) }"
+                        :class="{ 'is-danger': isAttacker(hero), 'is-info': !isAttacker(hero), 'is-specialist': isSpecialist(hero) }"
                         v-for="hero in pool.bot.filteredHeros"
                         :key="hero.name"
                       >{{ hero.name }}</span>
+                    </transition-group>
+                    <transition-group name="fade" tag="div" class="tag-list" v-else>
+                      <div
+                        class="thumbnail-wrapper"
+                        v-for="hero in pool.bot.filteredHeros"
+                        :key="hero.name"
+                      >
+                        <img
+                          :src="'./img/heros/' + hero.name_en + '.jpg'"
+                          :title="hero.name"
+                          :alt="hero.name"
+                          class="thumbnail"
+                        />
+                      </div>
                     </transition-group>
                   </div>
                 </div>
@@ -176,6 +239,7 @@ export default {
   data: function() {
     return {
       selectedPlayerName: "",
+      heros: {},
       players: [],
       pools: {}
     };
@@ -311,6 +375,14 @@ export default {
 
       pool = this.sortHeros(pool);
 
+      for (const lane of ["top", "mid", "bot"]) {
+        for (let i = 0; i < pool[lane]["heros"].length; i++) {
+          const hero = pool[lane]["heros"][i];
+          hero["name_en"] = this.heros[hero.name];
+          this.$set(pool[lane]["heros"], i, hero);
+        }
+      }
+
       pool["top"]["filteredHeros"] = pool["top"]["heros"];
       pool["mid"]["filteredHeros"] = pool["mid"]["heros"];
       pool["bot"]["filteredHeros"] = pool["bot"]["heros"];
@@ -324,7 +396,8 @@ export default {
         attackers: true,
         tanks: true,
         specialists: false,
-        search: false
+        search: false,
+        thumbnail: false
       };
       this.$set(this.pools[player], "showFilters", showFilters);
 
@@ -332,6 +405,23 @@ export default {
     },
     removePoolListByPlayer: function(player) {
       this.$delete(this.pools, player);
+    },
+    getHeros: async function() {
+      let heros = [];
+      let herosMap = {};
+
+      await this.$http
+        .get(this.$myjson.heros)
+        .then(function(res) {
+          heros = res.data;
+        })
+        .catch(function() {});
+
+      for (let i = 0; i < heros.length; i++) {
+        const hero = heros[i];
+        herosMap[hero.name_ja] = hero.name;
+      }
+      return herosMap;
     }
   },
   created: async function() {
@@ -340,6 +430,8 @@ export default {
       return a.name < b.name ? -1 : 1;
     });
     this.players = players;
+
+    this.heros = await this.getHeros();
 
     let params = [];
 
@@ -391,6 +483,20 @@ export default {
 .tag-list {
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
+}
+
+.thumbnail-wrapper {
+  margin: 0.2rem 0;
+  width: calc(100% / 6 - 0.3rem);
+}
+
+.thumbnail-wrapper:not(:last-child) {
+  margin-right: 0.3rem;
+}
+
+.thumbnail {
+  display: block;
 }
 
 .hero-list-wrapper {
@@ -400,6 +506,7 @@ export default {
 .hero-list-body {
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .hero-list-wrapper .tag {
