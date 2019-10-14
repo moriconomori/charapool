@@ -80,6 +80,15 @@
             </div>
           </div>
         </form>
+
+        <transition name="fade" mode="in-out">
+          <div class="modal is-active" v-show="modalIsActive">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+              <div class="notification is-success">登録が完了しました</div>
+            </div>
+          </div>
+        </transition>
       </div>
     </div>
   </div>
@@ -99,7 +108,8 @@ export default {
         role: "",
         specialist: false
       },
-      pool: {}
+      pool: {},
+      modalIsActive: false
     };
   },
   methods: {
@@ -178,6 +188,7 @@ export default {
         });
 
       if (restIsSuccess) {
+        this.showModal();
         this.$ga.event("register", "submit", formData.player);
       }
     },
@@ -211,6 +222,18 @@ export default {
       await this.$http
         .put(this.$myjson.players, this.playerList)
         .catch(function() {});
+    },
+    sleep: function(msec) {
+      return new Promise(function(resolve) {
+        setTimeout(function() {
+          resolve();
+        }, msec);
+      });
+    },
+    showModal: async function(params) {
+      this.modalIsActive = true;
+      await this.sleep(500);
+      this.modalIsActive = false;
     }
   },
   created: async function() {
@@ -267,5 +290,23 @@ export default {
 
 label.radio + label.radio {
   margin-left: 1rem;
+}
+
+.modal-content {
+  width: 60%;
+  text-align: center;
+}
+
+.notification {
+  padding: 1em;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
